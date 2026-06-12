@@ -1,4 +1,4 @@
-# CogPace 🧠 — Adaptive STEM Tutor Powered by Attention Science
+﻿# CogPace 馃 鈥?Adaptive STEM Tutor Powered by Attention Science
 
 > **Built for DSH Hacks V1 + STEMINATE HACKS 2026 + ML Empowerment Build Challenge**
 
@@ -8,21 +8,21 @@ CogPace is the first adaptive STEM tutor built on a **peer-reviewed attention sc
 
 ## The Science Behind It
 
-CogPace is grounded in an original mathematical model: **F_att(r) = S / r²**
+CogPace is grounded in an original mathematical model: **F_att(r) = S / r虏**
 
 | Symbol | Meaning |
 |--------|---------|
-| `F_att` | Attention field strength — measures cognitive engagement |
-| `S` | Motivational field strength — streak momentum × base motivation |
-| `r` | Psychological distance — estimated from response time + error patterns |
+| `F_att` | Attention field strength 鈥?measures cognitive engagement |
+| `S` | Motivational field strength 鈥?streak momentum 脳 base motivation |
+| `r` | Psychological distance 鈥?estimated from response time + error patterns |
 
 **4 Attention States** (classified from F_att value):
-- ⚡ **OPTIMAL** (F_att ≥ 2.0) — Deep flow state, increase difficulty
-- 😴 **UNDERLOADED** (F_att ≥ 0.8) — Too easy, student may disengage soon
-- ⚠️ **APPROACHING** (F_att ≥ 0.25) — Cognitive load rising, simplify approach
-- 🆘 **OVERLOADED** (F_att < 0.25) — Attention collapse, provide grounding explanation
+- 鈿?**OPTIMAL** (F_att 鈮?2.0) 鈥?Deep flow state, increase difficulty
+- 馃槾 **UNDERLOADED** (F_att 鈮?0.8) 鈥?Too easy, student may disengage soon
+- 鈿狅笍 **APPROACHING** (F_att 鈮?0.25) 鈥?Cognitive load rising, simplify approach
+- 馃啒 **OVERLOADED** (F_att < 0.25) 鈥?Attention collapse, provide grounding explanation
 
-The MFA framework synthesizes five major attention theories (Spotlight, Load, Resource, Spreading Activation, and Gradient models) into a single unified mathematical model. The F_att formula derives from 3D field geometry, making it physically motivated — not just a metaphor.
+The MFA framework synthesizes five major attention theories (Spotlight, Load, Resource, Spreading Activation, and Gradient models) into a single unified mathematical model. The F_att formula derives from 3D field geometry, making it physically motivated 鈥?not just a metaphor.
 
 *Reference: Zeng, Z. (2026). Attention as a Magnetic Field: A Unifying Framework for Attentional Gradient, Load, and Incidental Processing.*
 
@@ -37,12 +37,12 @@ The MFA framework synthesizes five major attention theories (Spotlight, Load, Re
 - **Streak-based field strength (S)** with momentum modeling
 
 ### Visual Transparency
-- **🔬 MFA Math Breakdown** — expandable panel showing r, S, F_att after each answer
-- **📈 F_att Trajectory Chart** — Altair line chart of attention field evolution over the session
-- **🎯 Live Attention Gauge** — color-coded state display after each question
+- **馃敩 MFA Math Breakdown** 鈥?expandable panel showing r, S, F_att after each answer
+- **馃搱 F_att Trajectory Chart** 鈥?Altair line chart of attention field evolution over the session
+- **馃幆 Live Attention Gauge** 鈥?color-coded state display after each question
 
 ### AI-Powered Explanations
-- **Google Gemini Integration** — state-aware explanations generated for each question
+- **Google Gemini Integration** 鈥?state-aware explanations generated for each question
 - **Explanation style adapts to cognitive state**: extension challenge (Optimal), curiosity hook (Underloaded), step-by-step (Approaching), warm simplicity (Overloaded)
 - **Works offline** without API key (reduced mode)
 
@@ -53,7 +53,7 @@ The MFA framework synthesizes five major attention theories (Spotlight, Load, Re
 - Personalized session feedback message
 
 ### Demo Mode
-- **🎭 Judge / Demo Mode** — one-click demo of all four attention states, no live interaction needed
+- **馃幁 Judge / Demo Mode** 鈥?one-click demo of all four attention states, no live interaction needed
 
 ---
 
@@ -61,12 +61,12 @@ The MFA framework synthesizes five major attention theories (Spotlight, Load, Re
 
 | Subject | Questions | Topics |
 |---------|-----------|--------|
-| ⚡ Physics | 33 | Kinematics, Forces, Energy, Waves, Optics, Fluids, Circular Motion, Momentum |
-| ∑ Mathematics | 35 | Algebra, Calculus, Probability, Statistics, Sequences, Trigonometry, Combinatorics |
-| 🧪 Chemistry | 35 | Atomic Structure, Bonding, Stoichiometry, Acids/Bases, Kinetics, Gas Laws, Equilibrium, Organic, Electrochemistry |
-| 💻 Computer Science | 25 | Algorithms, Data Structures, OOP, Networks, Machine Learning, Theory of Computation |
+| 鈿?Physics | 33 | Kinematics, Forces, Energy, Waves, Optics, Fluids, Circular Motion, Momentum |
+| 鈭?Mathematics | 35 | Algebra, Calculus, Probability, Statistics, Sequences, Trigonometry, Combinatorics |
+| 馃И Chemistry | 35 | Atomic Structure, Bonding, Stoichiometry, Acids/Bases, Kinetics, Gas Laws, Equilibrium, Organic, Electrochemistry |
+| 馃捇 Computer Science | 25 | Algorithms, Data Structures, OOP, Networks, Machine Learning, Theory of Computation |
 
-**Total: 128 questions across 4 difficulty levels (1–4)**
+**Total: 128 questions across 4 difficulty levels (1鈥?)**
 
 ---
 
@@ -74,7 +74,7 @@ The MFA framework synthesizes five major attention theories (Spotlight, Load, Re
 
 ```bash
 # Clone / download
-git clone https://github.com/corazeng/cogpace.git
+git clone https://github.com/xqscora/cogpace.git
 cd cogpace
 
 # Install dependencies
@@ -96,24 +96,24 @@ Without an API key, CogPace uses pre-generated fallback explanations.
 ## Architecture
 
 ```
-app.py              — Main Streamlit app (UI, session management, rendering)
-mfa_attention.py    — MFA engine (F_att calculation, state classification)
-gemini_adapter.py   — Gemini API wrapper (state-aware prompt generation)
-questions.json      — Question bank (4 subjects, 4 difficulty tiers)
-requirements.txt    — Python dependencies
+app.py              鈥?Main Streamlit app (UI, session management, rendering)
+mfa_attention.py    鈥?MFA engine (F_att calculation, state classification)
+gemini_adapter.py   鈥?Gemini API wrapper (state-aware prompt generation)
+questions.json      鈥?Question bank (4 subjects, 4 difficulty tiers)
+requirements.txt    鈥?Python dependencies
 ```
 
 ---
 
 ## Social Impact
 
-**Problem:** Quality STEM tutoring costs $30–$150/hour — inaccessible to most students globally.
+**Problem:** Quality STEM tutoring costs $30鈥?150/hour 鈥?inaccessible to most students globally.
 
 **CogPace is free, open source, and requires no account.**
 
 - Runs on any laptop with Python installed
 - Deployable offline in schools with limited internet
-- Adapts to each student's actual cognitive state — not their grade level or income bracket
+- Adapts to each student's actual cognitive state 鈥?not their grade level or income bracket
 - Scientific foundation: not just AI hype, but testable attention science
 
 **Target users:**
@@ -126,7 +126,7 @@ requirements.txt    — Python dependencies
 
 ## Author
 
-**Zihan (Cora) Zeng** — Age 15, G9, Beijing  
+**Zihan (Cora) Zeng** 鈥?Age 15, G9, Beijing  
 Published researcher: *first paper accepted at Frontiers in Psychology (2026)*  
 Author of the Magnetic Field Model of Attention
 
@@ -134,7 +134,7 @@ Author of the Magnetic Field Model of Attention
 
 ## License
 
-MIT License — free to use, modify, and distribute with attribution.
+MIT License 鈥?free to use, modify, and distribute with attribution.
 
 ---
 
