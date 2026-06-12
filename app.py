@@ -21,6 +21,11 @@ import streamlit as st
 from mfa_attention import compute_attention, state_to_color, state_to_difficulty_delta
 from gemini_adapter import get_explanation
 
+try:
+    from integrations.splunk_hec import send_attention_event
+except ImportError:
+    send_attention_event = None  # type: ignore[misc, assignment]
+
 # ──────────────────────────── CONFIG ────────────────────────────
 SESSION_LENGTH = 12          # Questions per session before showing summary
 
@@ -185,6 +190,7 @@ def init_state():
         "session_complete": False,
         "attention_history": [],     # list of states for mini-chart
         "f_att_history": [],         # list of (question_num, f_att) tuples for line chart
+        "splunk_session_id": None,  # stable id for HEC events
     }
     for k, v in defaults.items():
         if k not in st.session_state:
@@ -240,6 +246,7 @@ def start_session(subject: str):
     st.session_state.session_complete = False
     st.session_state.attention_history = []
     st.session_state.f_att_history = []
+    st.session_state.splunk_session_id = f"cogpace-{int(time.time())}-{random.randint(1000, 9999)}"
 
     q = select_question(st.session_state.level_map, 2)
     st.session_state.current_question = q
@@ -949,6 +956,20 @@ def handle_answer(selected_idx: int, q: dict):
         session_stats=session_stats,
     )
     st.session_state.explanation = explanation
+
+    if send_attention_event and st.session_state.splunk_session_id:
+        send_attention_event(
+            session_id=st.session_state.splunk_session_id,
+            question_id=str(q.get("id", "")),
+            subject=st.session_state.subject or "unknown",
+            state=snap.state,
+            f_att=snap.f_att,
+            r=snap.r,
+            s=snap.S,
+            correct=is_correct,
+            response_ms=int(response_time_ms),
+            extra={"topic": q.get("topic", ""), "level": q.get("level", 2)},
+        )
 
 
 # ──────────────────────────── MAIN ────────────────────────────
