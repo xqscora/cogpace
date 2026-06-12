@@ -1,0 +1,148 @@
+# CogPace 🧠 — Adaptive STEM Tutor Powered by Attention Science
+
+> **Built for DSH Hacks V1 + STEMINATE HACKS 2026 + ML Empowerment Build Challenge**
+
+CogPace is the first adaptive STEM tutor built on a **peer-reviewed attention science framework**: the Magnetic Field Model of Attention (MFA). Rather than adapting only on right/wrong signals, CogPace continuously estimates a student's cognitive state and dynamically adjusts difficulty and AI explanation style in real time.
+
+---
+
+## The Science Behind It
+
+CogPace is grounded in an original mathematical model: **F_att(r) = S / r²**
+
+| Symbol | Meaning |
+|--------|---------|
+| `F_att` | Attention field strength — measures cognitive engagement |
+| `S` | Motivational field strength — streak momentum × base motivation |
+| `r` | Psychological distance — estimated from response time + error patterns |
+
+**4 Attention States** (classified from F_att value):
+- ⚡ **OPTIMAL** (F_att ≥ 2.0) — Deep flow state, increase difficulty
+- 😴 **UNDERLOADED** (F_att ≥ 0.8) — Too easy, student may disengage soon
+- ⚠️ **APPROACHING** (F_att ≥ 0.25) — Cognitive load rising, simplify approach
+- 🆘 **OVERLOADED** (F_att < 0.25) — Attention collapse, provide grounding explanation
+
+The MFA framework synthesizes five major attention theories (Spotlight, Load, Resource, Spreading Activation, and Gradient models) into a single unified mathematical model. The F_att formula derives from 3D field geometry, making it physically motivated — not just a metaphor.
+
+*Reference: Zeng, Z. (2026). Attention as a Magnetic Field: A Unifying Framework for Attentional Gradient, Load, and Incidental Processing.*
+
+---
+
+## Features
+
+### Core Adaptive Engine
+- **Real-time F_att calculation** from every student response
+- **4-tier difficulty adaptation** based on current attention state
+- **Psychological distance (r)** computed from response time ratios
+- **Streak-based field strength (S)** with momentum modeling
+
+### Visual Transparency
+- **🔬 MFA Math Breakdown** — expandable panel showing r, S, F_att after each answer
+- **📈 F_att Trajectory Chart** — Altair line chart of attention field evolution over the session
+- **🎯 Live Attention Gauge** — color-coded state display after each question
+
+### AI-Powered Explanations
+- **Google Gemini Integration** — state-aware explanations generated for each question
+- **Explanation style adapts to cognitive state**: extension challenge (Optimal), curiosity hook (Underloaded), step-by-step (Approaching), warm simplicity (Overloaded)
+- **Works offline** without API key (reduced mode)
+
+### Session Analytics
+- Attention profile breakdown (% time in each state)
+- Accuracy grade (A+ to D)
+- Topic coverage visualization
+- Personalized session feedback message
+
+### Demo Mode
+- **🎭 Judge / Demo Mode** — one-click demo of all four attention states, no live interaction needed
+
+---
+
+## Question Bank
+
+| Subject | Questions | Topics |
+|---------|-----------|--------|
+| ⚡ Physics | 33 | Kinematics, Forces, Energy, Waves, Optics, Fluids, Circular Motion, Momentum |
+| ∑ Mathematics | 35 | Algebra, Calculus, Probability, Statistics, Sequences, Trigonometry, Combinatorics |
+| 🧪 Chemistry | 35 | Atomic Structure, Bonding, Stoichiometry, Acids/Bases, Kinetics, Gas Laws, Equilibrium, Organic, Electrochemistry |
+| 💻 Computer Science | 25 | Algorithms, Data Structures, OOP, Networks, Machine Learning, Theory of Computation |
+
+**Total: 128 questions across 4 difficulty levels (1–4)**
+
+---
+
+## Setup
+
+```bash
+# Clone / download
+git clone https://github.com/corazeng/cogpace.git
+cd cogpace
+
+# Install dependencies
+pip install streamlit google-generativeai altair pandas
+
+# Run
+streamlit run app.py
+```
+
+### Optional: Add Gemini API Key
+
+1. Get a free API key from [Google AI Studio](https://aistudio.google.com/)
+2. Enter it in the sidebar after launching (no `.env` file needed)
+
+Without an API key, CogPace uses pre-generated fallback explanations.
+
+---
+
+## Architecture
+
+```
+app.py              — Main Streamlit app (UI, session management, rendering)
+mfa_attention.py    — MFA engine (F_att calculation, state classification)
+gemini_adapter.py   — Gemini API wrapper (state-aware prompt generation)
+questions.json      — Question bank (4 subjects, 4 difficulty tiers)
+requirements.txt    — Python dependencies
+```
+
+---
+
+## Social Impact
+
+**Problem:** Quality STEM tutoring costs $30–$150/hour — inaccessible to most students globally.
+
+**CogPace is free, open source, and requires no account.**
+
+- Runs on any laptop with Python installed
+- Deployable offline in schools with limited internet
+- Adapts to each student's actual cognitive state — not their grade level or income bracket
+- Scientific foundation: not just AI hype, but testable attention science
+
+**Target users:**
+- High school students preparing for AMC, USABO, SAT, Olympiads
+- Teachers in under-resourced schools looking for adaptive tools
+- NGOs delivering STEM education in developing regions
+- Any self-directed learner who has struggled to stay focused while studying
+
+---
+
+## Author
+
+**Zihan (Cora) Zeng** — Age 15, G9, Beijing  
+Published researcher: *first paper accepted at Frontiers in Psychology (2026)*  
+Author of the Magnetic Field Model of Attention
+
+---
+
+## License
+
+MIT License — free to use, modify, and distribute with attribution.
+
+---
+
+## Screenshots
+
+*(Add screenshots here before submitting to Devpost)*
+
+1. Welcome screen with MFA formula display
+2. Live session with attention gauge + MFA math breakdown
+3. Session summary with F_att trajectory chart
+4. AI explanation panel

@@ -1,0 +1,1802 @@
+{
+  "physics": [
+    {
+      "id": "ph1",
+      "level": 1,
+      "question": "An object moves 100 m in 20 seconds at constant speed. What is its velocity?",
+      "options": [
+        "2 m/s",
+        "5 m/s",
+        "10 m/s",
+        "20 m/s"
+      ],
+      "answer": 1,
+      "explanation": "Velocity = distance / time = 100 / 20 = 5 m/s.",
+      "topic": "Kinematics"
+    },
+    {
+      "id": "ph2",
+      "level": 1,
+      "question": "Which of the following is a vector quantity?",
+      "options": [
+        "Speed",
+        "Temperature",
+        "Velocity",
+        "Mass"
+      ],
+      "answer": 2,
+      "explanation": "Velocity has both magnitude and direction, making it a vector. Speed only has magnitude (scalar).",
+      "topic": "Kinematics"
+    },
+    {
+      "id": "ph3",
+      "level": 1,
+      "question": "A 5 kg object experiences a net force of 20 N. What is its acceleration?",
+      "options": [
+        "0.25 m/s²",
+        "1 m/s²",
+        "4 m/s²",
+        "100 m/s²"
+      ],
+      "answer": 2,
+      "explanation": "Newton's 2nd Law: a = F/m = 20/5 = 4 m/s².",
+      "topic": "Forces"
+    },
+    {
+      "id": "ph4",
+      "level": 2,
+      "question": "A car accelerates from 0 to 30 m/s in 10 seconds. What is its acceleration?",
+      "options": [
+        "0.3 m/s²",
+        "3 m/s²",
+        "30 m/s²",
+        "300 m/s²"
+      ],
+      "answer": 1,
+      "explanation": "a = Δv/Δt = (30 - 0) / 10 = 3 m/s².",
+      "topic": "Kinematics"
+    },
+    {
+      "id": "ph5",
+      "level": 2,
+      "question": "An object at rest has a gravitational potential energy of 500 J relative to the ground. It then falls freely. Just before hitting the ground, its kinetic energy is approximately:",
+      "options": [
+        "0 J",
+        "250 J",
+        "500 J",
+        "1000 J"
+      ],
+      "answer": 2,
+      "explanation": "By conservation of energy, all potential energy converts to kinetic energy (ignoring air resistance): KE = 500 J.",
+      "topic": "Energy"
+    },
+    {
+      "id": "ph6",
+      "level": 2,
+      "question": "A spring with spring constant k = 200 N/m is compressed by 0.05 m. What is the elastic potential energy stored?",
+      "options": [
+        "0.25 J",
+        "0.5 J",
+        "5 J",
+        "10 J"
+      ],
+      "answer": 0,
+      "explanation": "PE = ½kx² = ½ × 200 × 0.05² = 0.25 J.",
+      "topic": "Energy"
+    },
+    {
+      "id": "ph7",
+      "level": 2,
+      "question": "Two objects collide and stick together. Which type of collision is this?",
+      "options": [
+        "Elastic",
+        "Perfectly inelastic",
+        "Partially elastic",
+        "Explosive"
+      ],
+      "answer": 1,
+      "explanation": "When objects stick together after collision, kinetic energy is not conserved — this is a perfectly inelastic collision.",
+      "topic": "Momentum"
+    },
+    {
+      "id": "ph8",
+      "level": 3,
+      "question": "A wave has a frequency of 50 Hz and a wavelength of 4 m. What is its wave speed?",
+      "options": [
+        "12.5 m/s",
+        "46 m/s",
+        "54 m/s",
+        "200 m/s"
+      ],
+      "answer": 3,
+      "explanation": "Wave speed v = frequency × wavelength = 50 × 4 = 200 m/s.",
+      "topic": "Waves"
+    },
+    {
+      "id": "ph9",
+      "level": 3,
+      "question": "According to Ohm's Law, if voltage doubles while resistance stays constant, current:",
+      "options": [
+        "Halves",
+        "Stays the same",
+        "Doubles",
+        "Quadruples"
+      ],
+      "answer": 2,
+      "explanation": "I = V/R. If V doubles and R is constant, I doubles.",
+      "topic": "Electricity"
+    },
+    {
+      "id": "ph10",
+      "level": 3,
+      "question": "Two resistors of 6 Ω and 3 Ω are connected in parallel. What is the equivalent resistance?",
+      "options": [
+        "1 Ω",
+        "2 Ω",
+        "4.5 Ω",
+        "9 Ω"
+      ],
+      "answer": 1,
+      "explanation": "1/R_eq = 1/6 + 1/3 = 1/6 + 2/6 = 3/6 = 1/2. So R_eq = 2 Ω.",
+      "topic": "Electricity"
+    },
+    {
+      "id": "ph11",
+      "level": 3,
+      "question": "The speed of light in a vacuum is approximately 3 × 10⁸ m/s. If a photon has frequency 6 × 10¹⁴ Hz, what is its wavelength?",
+      "options": [
+        "200 nm",
+        "500 nm",
+        "700 nm",
+        "1000 nm"
+      ],
+      "answer": 1,
+      "explanation": "λ = c/f = 3×10⁸ / 6×10¹⁴ = 5×10⁻⁷ m = 500 nm (visible green light).",
+      "topic": "Waves"
+    },
+    {
+      "id": "ph12",
+      "level": 4,
+      "question": "A 2 kg mass on a frictionless surface is connected to a spring (k = 8 N/m). What is the angular frequency of oscillation?",
+      "options": [
+        "0.5 rad/s",
+        "1 rad/s",
+        "2 rad/s",
+        "4 rad/s"
+      ],
+      "answer": 2,
+      "explanation": "ω = √(k/m) = √(8/2) = √4 = 2 rad/s.",
+      "topic": "Oscillations"
+    },
+    {
+      "id": "ph13",
+      "level": 4,
+      "question": "In a double-slit experiment with slit separation d = 0.1 mm and wavelength λ = 500 nm, what is the fringe spacing at 1 m distance?",
+      "options": [
+        "0.5 mm",
+        "5 mm",
+        "0.5 cm",
+        "5 cm"
+      ],
+      "answer": 1,
+      "explanation": "Fringe spacing Δy = λL/d = 500×10⁻⁹ × 1 / 0.1×10⁻³ = 5×10⁻³ m = 5 mm.",
+      "topic": "Optics"
+    },
+    {
+      "id": "ph14",
+      "level": 4,
+      "question": "A proton (charge +e) moves with velocity v perpendicular to a magnetic field B. The magnetic force on it is:",
+      "options": [
+        "evB downward",
+        "evB, direction from right-hand rule",
+        "e²vB",
+        "Zero"
+      ],
+      "answer": 1,
+      "explanation": "F = qv × B. The direction is given by the right-hand rule (or left-hand for positive charge moving in B field).",
+      "topic": "Electromagnetism"
+    },
+    {
+      "id": "ph15",
+      "level": 5,
+      "question": "According to special relativity, a muon moving at 0.99c has a Lorentz factor γ ≈ 7.1. If its rest lifetime is 2.2 μs, what is its observed lifetime?",
+      "options": [
+        "0.31 μs",
+        "2.2 μs",
+        "15.6 μs",
+        "22 μs"
+      ],
+      "answer": 2,
+      "explanation": "Time dilation: t' = γt₀ ≈ 7.1 × 2.2 ≈ 15.6 μs. This is why muons created in the upper atmosphere reach Earth's surface.",
+      "topic": "Special Relativity"
+    },
+    {
+      "id": "ph16",
+      "level": 1,
+      "question": "What is the SI unit of force?",
+      "options": [
+        "Joule",
+        "Watt",
+        "Newton",
+        "Pascal"
+      ],
+      "answer": 2,
+      "explanation": "The SI unit of force is the Newton (N). 1 N = 1 kg·m/s².",
+      "topic": "Forces"
+    },
+    {
+      "id": "ph17",
+      "level": 2,
+      "question": "An object is thrown horizontally from a cliff at 20 m/s. Ignoring air resistance, after 3 seconds, how far has it fallen?",
+      "options": [
+        "9 m",
+        "30 m",
+        "44 m",
+        "60 m"
+      ],
+      "answer": 2,
+      "explanation": "Vertical fall: h = ½gt² = ½ × 10 × 9 = 45 m ≈ 44 m (using g ≈ 9.8).",
+      "topic": "Kinematics"
+    },
+    {
+      "id": "ph18",
+      "level": 3,
+      "question": "The work done by a force of 50 N moving an object 6 m at 60° to the direction of motion is:",
+      "options": [
+        "150 J",
+        "260 J",
+        "300 J",
+        "520 J"
+      ],
+      "answer": 0,
+      "explanation": "W = F·d·cos(θ) = 50 × 6 × cos(60°) = 50 × 6 × 0.5 = 150 J.",
+      "topic": "Energy"
+    },
+    {
+      "id": "ph19",
+      "level": 4,
+      "question": "In the photoelectric effect, increasing the intensity of light (same frequency) increases:",
+      "options": [
+        "The maximum kinetic energy of photoelectrons",
+        "The stopping voltage",
+        "The number of photoelectrons per second",
+        "The threshold frequency"
+      ],
+      "answer": 2,
+      "explanation": "Intensity = number of photons per second. More photons → more electrons ejected. KE depends only on frequency, not intensity.",
+      "topic": "Quantum Physics"
+    },
+    {
+      "id": "ph20",
+      "level": 5,
+      "question": "Heisenberg's uncertainty principle states that Δx·Δp ≥ ℏ/2. For an electron confined to 1 nm, the minimum uncertainty in momentum is approximately:",
+      "options": [
+        "5.3 × 10⁻²⁶ kg·m/s",
+        "1.1 × 10⁻²⁵ kg·m/s",
+        "5.3 × 10⁻²⁵ kg·m/s",
+        "1.1 × 10⁻²⁴ kg·m/s"
+      ],
+      "answer": 0,
+      "explanation": "Δp ≥ ℏ/(2Δx) = 1.055×10⁻³⁴ / (2 × 1×10⁻⁹) ≈ 5.3×10⁻²⁶ kg·m/s.",
+      "topic": "Quantum Physics"
+    },
+    {
+      "id": "ph21",
+      "level": 1,
+      "question": "What happens to the volume of a gas if its absolute temperature doubles at constant pressure?",
+      "options": [
+        "It halves",
+        "It stays the same",
+        "It doubles",
+        "It quadruples"
+      ],
+      "answer": 2,
+      "explanation": "Charles's Law: V ∝ T (at constant pressure). Doubling absolute temperature doubles the volume.",
+      "topic": "Thermodynamics"
+    },
+    {
+      "id": "ph22",
+      "level": 2,
+      "question": "A hydraulic press has a small piston of area 0.01 m² and a large piston of area 0.5 m². If you push the small piston with 100 N, what force does the large piston exert?",
+      "options": [
+        "2 N",
+        "100 N",
+        "500 N",
+        "5000 N"
+      ],
+      "answer": 3,
+      "explanation": "Pascal's Law: F₂ = F₁ × (A₂/A₁) = 100 × (0.5/0.01) = 5000 N.",
+      "topic": "Fluids"
+    },
+    {
+      "id": "ph23",
+      "level": 2,
+      "question": "An object moves in a circle at constant speed. Which statement is true?",
+      "options": [
+        "Velocity and acceleration are both constant",
+        "Speed is constant but velocity changes direction",
+        "Acceleration is zero",
+        "No net force acts on it"
+      ],
+      "answer": 1,
+      "explanation": "In circular motion, speed is constant but velocity direction changes continuously. This requires centripetal acceleration (and force) toward the center.",
+      "topic": "Circular Motion"
+    },
+    {
+      "id": "ph24",
+      "level": 3,
+      "question": "A point charge of +2 μC sits at the origin. What is the electric field magnitude at 3 m away? (k = 9×10⁹ N·m²/C²)",
+      "options": [
+        "667 N/C",
+        "1333 N/C",
+        "2000 N/C",
+        "6000 N/C"
+      ],
+      "answer": 2,
+      "explanation": "E = kq/r² = 9×10⁹ × 2×10⁻⁶ / 3² = 18000/9 = 2000 N/C.",
+      "topic": "Electromagnetism"
+    },
+    {
+      "id": "ph25",
+      "level": 3,
+      "question": "Lenz's Law states that the direction of an induced current is such that it:",
+      "options": [
+        "Amplifies the changing magnetic flux",
+        "Opposes the change in magnetic flux that caused it",
+        "Flows in the direction of the magnetic field",
+        "Maximizes electrical power"
+      ],
+      "answer": 1,
+      "explanation": "Lenz's Law: induced current creates a magnetic field that opposes the change in flux — nature resists change (similar to Newton's 3rd Law for electromagnetic induction).",
+      "topic": "Electromagnetism"
+    },
+    {
+      "id": "ph26",
+      "level": 3,
+      "question": "In nuclear fission, a uranium-235 nucleus absorbs a neutron and splits. The total mass of products is slightly less than the original mass. This missing mass becomes:",
+      "options": [
+        "Gravitational potential energy",
+        "Heat only",
+        "Energy via E = mc²",
+        "Neutrinos only"
+      ],
+      "answer": 2,
+      "explanation": "Mass-energy equivalence (Einstein, E = mc²): the 'mass defect' converts to enormous energy — about 200 MeV per fission event.",
+      "topic": "Nuclear Physics"
+    },
+    {
+      "id": "ph27",
+      "level": 4,
+      "question": "A steel rod of length 2 m and linear expansion coefficient α = 12×10⁻⁶ /°C is heated by 50°C. What is the increase in length?",
+      "options": [
+        "0.6 mm",
+        "1.2 mm",
+        "6 mm",
+        "12 mm"
+      ],
+      "answer": 1,
+      "explanation": "ΔL = α × L × ΔT = 12×10⁻⁶ × 2 × 50 = 1.2×10⁻³ m = 1.2 mm.",
+      "topic": "Thermodynamics"
+    },
+    {
+      "id": "ph28",
+      "level": 4,
+      "question": "A ray of light hits a glass surface at 30° to the normal. The glass has n = 1.5. Using Snell's Law (n₁sinθ₁ = n₂sinθ₂), the refracted angle is approximately:",
+      "options": [
+        "12°",
+        "19.5°",
+        "30°",
+        "48°"
+      ],
+      "answer": 1,
+      "explanation": "sin θ₂ = (n₁/n₂) sin θ₁ = (1/1.5) × sin30° = (1/1.5) × 0.5 = 0.333. θ₂ = arcsin(0.333) ≈ 19.5°.",
+      "topic": "Optics"
+    },
+    {
+      "id": "ph29",
+      "level": 5,
+      "question": "The Schrödinger equation gives the wavefunction ψ of a quantum particle. The physical interpretation of |ψ|² is:",
+      "options": [
+        "The particle's kinetic energy at that point",
+        "The probability density of finding the particle at that location",
+        "The particle's electric potential",
+        "The particle's spin state"
+      ],
+      "answer": 1,
+      "explanation": "Born interpretation: |ψ(x)|² gives the probability density — integrating over a region gives the probability of finding the particle there.",
+      "topic": "Quantum Physics"
+    },
+    {
+      "id": "ph30",
+      "level": 5,
+      "question": "General relativity predicts that a massive object warps spacetime. Which experimental observation first confirmed this?",
+      "options": [
+        "The perihelion precession of Mercury",
+        "The bending of starlight around the Sun during a 1919 solar eclipse",
+        "The photoelectric effect",
+        "Both A and B, with A being the first and most famous"
+      ],
+      "answer": 3,
+      "explanation": "Mercury's perihelion precession was the first hint, but Eddington's 1919 eclipse expedition — measuring bending of starlight around the Sun — became the famous confirmation that made Einstein world-famous.",
+      "topic": "Special Relativity"
+    },
+    {
+      "id": "ph31",
+      "level": 3,
+      "topic": "Fluids",
+      "question": "According to Bernoulli's principle, as the velocity of a fluid increases, its pressure:",
+      "options": [
+        "Increases proportionally",
+        "Remains constant",
+        "Decreases",
+        "Increases then decreases"
+      ],
+      "answer": 2,
+      "explanation": "Bernoulli's principle: P + ½ρv² + ρgh = constant. As velocity v increases, the dynamic pressure term (½ρv²) increases, so static pressure P must decrease. This explains lift on airplane wings."
+    },
+    {
+      "id": "ph32",
+      "level": 3,
+      "topic": "Circular Motion",
+      "question": "A car of mass 1000 kg travels around a circular track of radius 50 m at 10 m/s. What centripetal force is required?",
+      "options": [
+        "200 N",
+        "1000 N",
+        "2000 N",
+        "5000 N"
+      ],
+      "answer": 2,
+      "explanation": "Centripetal force F = mv²/r = 1000 × 10² / 50 = 1000 × 100/50 = 2000 N. This force points toward the center of the circle."
+    },
+    {
+      "id": "ph33",
+      "level": 2,
+      "topic": "Momentum",
+      "question": "A 2 kg ball moving at 5 m/s collides with a stationary 3 kg ball. They stick together. What is their combined velocity after the collision?",
+      "options": [
+        "1 m/s",
+        "2 m/s",
+        "3 m/s",
+        "5 m/s"
+      ],
+      "answer": 1,
+      "explanation": "Conservation of momentum: p_before = p_after. m₁v₁ + 0 = (m₁+m₂)v_f. 2×5 = (2+3)v_f. 10 = 5v_f. v_f = 2 m/s. (Perfectly inelastic collision.)"
+    }
+  ],
+  "math": [
+    {
+      "id": "ma1",
+      "level": 1,
+      "question": "What is 7² + 5²?",
+      "options": [
+        "49",
+        "72",
+        "74",
+        "144"
+      ],
+      "answer": 2,
+      "explanation": "7² = 49, 5² = 25. 49 + 25 = 74.",
+      "topic": "Arithmetic"
+    },
+    {
+      "id": "ma2",
+      "level": 1,
+      "question": "Solve for x: 3x + 6 = 21",
+      "options": [
+        "3",
+        "5",
+        "7",
+        "9"
+      ],
+      "answer": 1,
+      "explanation": "3x = 21 - 6 = 15. x = 15/3 = 5.",
+      "topic": "Algebra"
+    },
+    {
+      "id": "ma3",
+      "level": 1,
+      "question": "What is the area of a rectangle with length 8 and width 5?",
+      "options": [
+        "13",
+        "26",
+        "40",
+        "80"
+      ],
+      "answer": 2,
+      "explanation": "Area = length × width = 8 × 5 = 40.",
+      "topic": "Geometry"
+    },
+    {
+      "id": "ma4",
+      "level": 2,
+      "question": "Solve: x² - 5x + 6 = 0",
+      "options": [
+        "x = 1, 6",
+        "x = 2, 3",
+        "x = -2, -3",
+        "x = -1, 6"
+      ],
+      "answer": 1,
+      "explanation": "Factor: (x-2)(x-3) = 0. So x = 2 or x = 3.",
+      "topic": "Algebra"
+    },
+    {
+      "id": "ma5",
+      "level": 2,
+      "question": "A circle has radius 7. What is its circumference? (Use π ≈ 3.14)",
+      "options": [
+        "21.98",
+        "43.96",
+        "153.86",
+        "307.72"
+      ],
+      "answer": 1,
+      "explanation": "C = 2πr = 2 × 3.14 × 7 = 43.96.",
+      "topic": "Geometry"
+    },
+    {
+      "id": "ma6",
+      "level": 2,
+      "question": "What is the slope of the line through points (1, 3) and (5, 11)?",
+      "options": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "answer": 1,
+      "explanation": "Slope = (y₂ - y₁)/(x₂ - x₁) = (11 - 3)/(5 - 1) = 8/4 = 2.",
+      "topic": "Algebra"
+    },
+    {
+      "id": "ma7",
+      "level": 2,
+      "question": "In a right triangle, the two legs are 3 and 4. What is the hypotenuse?",
+      "options": [
+        "3.5",
+        "5",
+        "7",
+        "25"
+      ],
+      "answer": 1,
+      "explanation": "Pythagorean theorem: c² = 3² + 4² = 9 + 16 = 25. c = 5.",
+      "topic": "Geometry"
+    },
+    {
+      "id": "ma8",
+      "level": 3,
+      "question": "If f(x) = 2x² - 3x + 1, what is f'(x)?",
+      "options": [
+        "2x - 3",
+        "4x - 3",
+        "4x + 3",
+        "2x² - 3"
+      ],
+      "answer": 1,
+      "explanation": "Using power rule: f'(x) = 4x - 3.",
+      "topic": "Calculus"
+    },
+    {
+      "id": "ma9",
+      "level": 3,
+      "question": "What is the value of log₂(64)?",
+      "options": [
+        "4",
+        "5",
+        "6",
+        "8"
+      ],
+      "answer": 2,
+      "explanation": "2⁶ = 64, so log₂(64) = 6.",
+      "topic": "Algebra"
+    },
+    {
+      "id": "ma10",
+      "level": 3,
+      "question": "The sum of an arithmetic sequence with first term 2, common difference 3, and 10 terms is:",
+      "options": [
+        "65",
+        "115",
+        "155",
+        "185"
+      ],
+      "answer": 2,
+      "explanation": "S = n/2 × (2a + (n-1)d) = 10/2 × (2×2 + 9×3) = 5 × (4+27) = 5 × 31 = 155.",
+      "topic": "Sequences"
+    },
+    {
+      "id": "ma11",
+      "level": 3,
+      "question": "What is the probability of rolling two dice and getting a sum of 7?",
+      "options": [
+        "1/6",
+        "1/9",
+        "1/12",
+        "1/36"
+      ],
+      "answer": 0,
+      "explanation": "There are 6 favorable outcomes: (1,6),(2,5),(3,4),(4,3),(5,2),(6,1). Total outcomes: 36. P = 6/36 = 1/6.",
+      "topic": "Probability"
+    },
+    {
+      "id": "ma12",
+      "level": 3,
+      "question": "∫(2x + 3)dx = ?",
+      "options": [
+        "x² + C",
+        "x² + 3x + C",
+        "2 + C",
+        "2x² + 3x + C"
+      ],
+      "answer": 1,
+      "explanation": "∫(2x + 3)dx = x² + 3x + C.",
+      "topic": "Calculus"
+    },
+    {
+      "id": "ma13",
+      "level": 4,
+      "question": "If A = [[1,2],[3,4]], what is det(A)?",
+      "options": [
+        "-2",
+        "2",
+        "-10",
+        "10"
+      ],
+      "answer": 0,
+      "explanation": "det(A) = (1)(4) - (2)(3) = 4 - 6 = -2.",
+      "topic": "Linear Algebra"
+    },
+    {
+      "id": "ma14",
+      "level": 4,
+      "question": "What is the limit: lim(x→0) of sin(x)/x?",
+      "options": [
+        "0",
+        "0.5",
+        "1",
+        "∞"
+      ],
+      "answer": 2,
+      "explanation": "This is a fundamental limit in calculus: lim(x→0) sin(x)/x = 1.",
+      "topic": "Calculus"
+    },
+    {
+      "id": "ma15",
+      "level": 4,
+      "question": "How many distinct permutations are there of the letters in 'BANANA'?",
+      "options": [
+        "60",
+        "120",
+        "360",
+        "720"
+      ],
+      "answer": 0,
+      "explanation": "BANANA has 6 letters with A appearing 3 times, N appearing 2 times, B once. Permutations = 6!/(3!2!1!) = 720/12 = 60.",
+      "topic": "Combinatorics"
+    },
+    {
+      "id": "ma16",
+      "level": 4,
+      "question": "The Taylor series expansion of eˣ around x=0 starts with:",
+      "options": [
+        "1 + x²/2!",
+        "1 + x + x²/2! + x³/3! + ...",
+        "x + x²/2 + x³/6 + ...",
+        "1 - x + x²/2! - x³/3! + ..."
+      ],
+      "answer": 1,
+      "explanation": "eˣ = Σ xⁿ/n! = 1 + x + x²/2! + x³/3! + ...",
+      "topic": "Calculus"
+    },
+    {
+      "id": "ma17",
+      "level": 5,
+      "question": "For vectors u = (1,2,3) and v = (4,5,6), what is u·v (dot product)?",
+      "options": [
+        "14",
+        "32",
+        "45",
+        "56"
+      ],
+      "answer": 1,
+      "explanation": "u·v = 1×4 + 2×5 + 3×6 = 4 + 10 + 18 = 32.",
+      "topic": "Linear Algebra"
+    },
+    {
+      "id": "ma18",
+      "level": 5,
+      "question": "What is ∫₀¹ x²dx?",
+      "options": [
+        "1/4",
+        "1/3",
+        "1/2",
+        "1"
+      ],
+      "answer": 1,
+      "explanation": "∫₀¹ x²dx = [x³/3]₀¹ = 1/3 - 0 = 1/3.",
+      "topic": "Calculus"
+    },
+    {
+      "id": "ma19",
+      "level": 5,
+      "question": "The complex number (1+i)² equals:",
+      "options": [
+        "2",
+        "2i",
+        "1+2i",
+        "-1+2i"
+      ],
+      "answer": 1,
+      "explanation": "(1+i)² = 1 + 2i + i² = 1 + 2i - 1 = 2i.",
+      "topic": "Complex Numbers"
+    },
+    {
+      "id": "ma20",
+      "level": 5,
+      "question": "By the Central Limit Theorem, the sampling distribution of the sample mean approaches a normal distribution as:",
+      "options": [
+        "The population variance decreases",
+        "The sample size increases",
+        "The mean increases",
+        "The standard deviation increases"
+      ],
+      "answer": 1,
+      "explanation": "The CLT states that as sample size n → ∞, the sampling distribution of x̄ approaches N(μ, σ²/n) regardless of the population distribution.",
+      "topic": "Statistics"
+    },
+    {
+      "id": "ma21",
+      "level": 1,
+      "question": "What is 3/4 + 1/6?",
+      "options": [
+        "4/10",
+        "5/12",
+        "11/12",
+        "4/6"
+      ],
+      "answer": 2,
+      "explanation": "LCD of 4 and 6 is 12. 3/4 = 9/12, 1/6 = 2/12. Sum = 11/12.",
+      "topic": "Arithmetic"
+    },
+    {
+      "id": "ma22",
+      "level": 1,
+      "question": "A shirt costs $40. It's on sale for 25% off. What is the sale price?",
+      "options": [
+        "$10",
+        "$25",
+        "$30",
+        "$35"
+      ],
+      "answer": 2,
+      "explanation": "25% of $40 = $10 discount. Sale price = $40 - $10 = $30.",
+      "topic": "Arithmetic"
+    },
+    {
+      "id": "ma23",
+      "level": 2,
+      "question": "In a right triangle, if one angle is 30°, what is sin(30°)?",
+      "options": [
+        "0",
+        "0.5",
+        "√3/2",
+        "1"
+      ],
+      "answer": 1,
+      "explanation": "sin(30°) = 1/2 = 0.5. This is one of the standard trigonometric values to memorize.",
+      "topic": "Trigonometry"
+    },
+    {
+      "id": "ma24",
+      "level": 2,
+      "question": "Solve the system: x + y = 7 and x - y = 3. What is x?",
+      "options": [
+        "2",
+        "3",
+        "5",
+        "7"
+      ],
+      "answer": 2,
+      "explanation": "Adding the equations: 2x = 10, so x = 5. Then y = 7 - 5 = 2.",
+      "topic": "Algebra"
+    },
+    {
+      "id": "ma25",
+      "level": 3,
+      "question": "Using the binomial theorem, what is the coefficient of x² in the expansion of (1 + x)⁵?",
+      "options": [
+        "5",
+        "10",
+        "15",
+        "20"
+      ],
+      "answer": 1,
+      "explanation": "C(5,2) = 5!/(2!3!) = 10. The coefficient of x² in (1+x)⁵ is C(5,2) = 10.",
+      "topic": "Combinatorics"
+    },
+    {
+      "id": "ma26",
+      "level": 3,
+      "question": "If tan(θ) = 3/4 and θ is in the first quadrant, what is sin(θ)?",
+      "options": [
+        "3/4",
+        "3/5",
+        "4/5",
+        "4/3"
+      ],
+      "answer": 1,
+      "explanation": "In a 3-4-5 right triangle, hypotenuse = 5. sin(θ) = opposite/hypotenuse = 3/5.",
+      "topic": "Trigonometry"
+    },
+    {
+      "id": "ma27",
+      "level": 4,
+      "question": "The differential equation dy/dx = ky has the general solution:",
+      "options": [
+        "y = kx + C",
+        "y = Ce^(kx)",
+        "y = Ce^(-kx)",
+        "y = k ln(x) + C"
+      ],
+      "answer": 1,
+      "explanation": "Separating variables: dy/y = k dx. Integrating: ln|y| = kx + const. So y = Ce^(kx). This models exponential growth/decay.",
+      "topic": "Calculus"
+    },
+    {
+      "id": "ma28",
+      "level": 4,
+      "question": "For matrix A = [[2,1],[1,2]], which of these is an eigenvalue?",
+      "options": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "answer": 2,
+      "explanation": "Eigenvalues found from det(A - λI) = 0. (2-λ)² - 1 = 0. λ² - 4λ + 3 = 0. (λ-1)(λ-3) = 0. Eigenvalues are 1 and 3.",
+      "topic": "Linear Algebra"
+    },
+    {
+      "id": "ma29",
+      "level": 5,
+      "question": "What is the gradient ∇f at the point (1, 2) for f(x, y) = x²y + 3y?",
+      "options": [
+        "(4, 4)",
+        "(4, 6)",
+        "(2, 4)",
+        "(4, 4)"
+      ],
+      "answer": 0,
+      "explanation": "∂f/∂x = 2xy = 2(1)(2) = 4. ∂f/∂y = x² + 3 = 1 + 3 = 4. So ∇f = (4, 4).",
+      "topic": "Calculus"
+    },
+    {
+      "id": "ma30",
+      "level": 5,
+      "question": "Euler's identity e^(iπ) + 1 = 0 connects five fundamental constants. Which branch of mathematics does it come from?",
+      "options": [
+        "Real analysis only",
+        "Complex analysis / Euler's formula e^(iθ) = cos θ + i sin θ",
+        "Number theory",
+        "Topology"
+      ],
+      "answer": 1,
+      "explanation": "Euler's formula: e^(iθ) = cos θ + i sin θ. Setting θ = π: e^(iπ) = cos π + i sin π = -1 + 0 = -1. Thus e^(iπ) + 1 = 0.",
+      "topic": "Complex Numbers"
+    },
+    {
+      "id": "ma31",
+      "level": 3,
+      "topic": "Probability",
+      "question": "A fair coin is flipped 4 times. What is the probability of getting exactly 2 heads?",
+      "options": [
+        "1/4",
+        "3/8",
+        "1/2",
+        "5/16"
+      ],
+      "answer": 1,
+      "explanation": "P(exactly 2 heads) = C(4,2) × (1/2)⁴ = 6 × 1/16 = 6/16 = 3/8. Using the binomial distribution with n=4, k=2, p=0.5."
+    },
+    {
+      "id": "ma32",
+      "level": 3,
+      "topic": "Statistics",
+      "question": "In a normal distribution, approximately what percentage of data falls within 2 standard deviations of the mean?",
+      "options": [
+        "68%",
+        "95%",
+        "99.7%",
+        "90%"
+      ],
+      "answer": 1,
+      "explanation": "The 68-95-99.7 rule (empirical rule): ~68% within 1σ, ~95% within 2σ, ~99.7% within 3σ of the mean in a normal distribution."
+    },
+    {
+      "id": "ma33",
+      "level": 2,
+      "topic": "Sequences",
+      "question": "What is the 10th term of the arithmetic sequence 3, 7, 11, 15, ...?",
+      "options": [
+        "39",
+        "41",
+        "43",
+        "45"
+      ],
+      "answer": 0,
+      "explanation": "Arithmetic sequence: aₙ = a₁ + (n−1)d = 3 + (10−1)×4 = 3 + 36 = 39. Common difference d = 7−3 = 4."
+    },
+    {
+      "id": "ma34",
+      "level": 3,
+      "topic": "Trigonometry",
+      "question": "If sin θ = 3/5 and θ is in the first quadrant, what is cos θ?",
+      "options": [
+        "3/4",
+        "4/5",
+        "4/3",
+        "5/3"
+      ],
+      "answer": 1,
+      "explanation": "Using the Pythagorean identity: cos²θ = 1 − sin²θ = 1 − 9/25 = 16/25, so cos θ = 4/5 (positive since θ is in quadrant I). This is the 3-4-5 right triangle."
+    },
+    {
+      "id": "ma35",
+      "level": 3,
+      "topic": "Combinatorics",
+      "question": "In how many ways can 5 students be arranged in a line?",
+      "options": [
+        "25",
+        "60",
+        "100",
+        "120"
+      ],
+      "answer": 3,
+      "explanation": "The number of ways to arrange n distinct objects in a line is n! (n factorial). 5! = 5 × 4 × 3 × 2 × 1 = 120. This is a permutation of 5 objects."
+    }
+  ],
+  "chemistry": [
+    {
+      "id": "ch1",
+      "level": 1,
+      "question": "What is the atomic number of Carbon?",
+      "options": [
+        "4",
+        "6",
+        "8",
+        "12"
+      ],
+      "answer": 1,
+      "explanation": "Carbon (C) has atomic number 6 — it has 6 protons in its nucleus.",
+      "topic": "Atomic Structure"
+    },
+    {
+      "id": "ch2",
+      "level": 1,
+      "question": "Which of these is a covalent compound?",
+      "options": [
+        "NaCl",
+        "KBr",
+        "H₂O",
+        "MgO"
+      ],
+      "answer": 2,
+      "explanation": "H₂O is covalent — two hydrogen atoms share electrons with oxygen. The others are ionic.",
+      "topic": "Chemical Bonding"
+    },
+    {
+      "id": "ch3",
+      "level": 2,
+      "question": "Balance this equation: H₂ + O₂ → H₂O. The balanced form is:",
+      "options": [
+        "H₂ + O₂ → H₂O",
+        "2H₂ + O₂ → 2H₂O",
+        "H₂ + O₂ → 2H₂O",
+        "2H₂ + 2O₂ → 2H₂O"
+      ],
+      "answer": 1,
+      "explanation": "2H₂ + O₂ → 2H₂O. This balances: 4H on left, 4H on right; 2O on left, 2O on right.",
+      "topic": "Stoichiometry"
+    },
+    {
+      "id": "ch4",
+      "level": 2,
+      "question": "A solution with pH = 3 is how many times more acidic than one with pH = 6?",
+      "options": [
+        "3×",
+        "10×",
+        "100×",
+        "1000×"
+      ],
+      "answer": 3,
+      "explanation": "pH difference of 3 means [H⁺] ratio of 10³ = 1000. pH = 3 is 1000× more acidic than pH = 6.",
+      "topic": "Acids and Bases"
+    },
+    {
+      "id": "ch5",
+      "level": 3,
+      "question": "In the reaction A → B, if [A] doubles and the rate quadruples, what is the reaction order with respect to A?",
+      "options": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "answer": 2,
+      "explanation": "Rate ∝ [A]ⁿ. Doubling [A] quadruples rate: 2ⁿ = 4, so n = 2. Second order.",
+      "topic": "Kinetics"
+    },
+    {
+      "id": "ch6",
+      "level": 1,
+      "question": "How many electrons does a neutral oxygen atom have?",
+      "options": [
+        "6",
+        "7",
+        "8",
+        "16"
+      ],
+      "answer": 2,
+      "explanation": "Oxygen's atomic number is 8, meaning it has 8 protons. A neutral atom has the same number of electrons as protons: 8.",
+      "topic": "Atomic Structure"
+    },
+    {
+      "id": "ch7",
+      "level": 1,
+      "question": "What is the approximate molar mass of water (H₂O)?",
+      "options": [
+        "10 g/mol",
+        "16 g/mol",
+        "18 g/mol",
+        "20 g/mol"
+      ],
+      "answer": 2,
+      "explanation": "H = 1 g/mol × 2 = 2 g/mol. O = 16 g/mol. Total = 18 g/mol.",
+      "topic": "Stoichiometry"
+    },
+    {
+      "id": "ch8",
+      "level": 1,
+      "question": "Which state of matter has a definite volume but no definite shape?",
+      "options": [
+        "Solid",
+        "Liquid",
+        "Gas",
+        "Plasma"
+      ],
+      "answer": 1,
+      "explanation": "Liquids have definite volume (incompressible) but take the shape of their container (no fixed shape).",
+      "topic": "States of Matter"
+    },
+    {
+      "id": "ch9",
+      "level": 2,
+      "question": "What is the molarity of a solution made by dissolving 58.5 g of NaCl (M = 58.5 g/mol) in 1 L of water?",
+      "options": [
+        "0.5 M",
+        "1.0 M",
+        "2.0 M",
+        "58.5 M"
+      ],
+      "answer": 1,
+      "explanation": "Moles of NaCl = 58.5 g / 58.5 g/mol = 1.0 mol. Molarity = 1.0 mol / 1.0 L = 1.0 M.",
+      "topic": "Solutions"
+    },
+    {
+      "id": "ch10",
+      "level": 2,
+      "question": "In the reaction Zn + CuSO₄ → ZnSO₄ + Cu, which element is oxidized?",
+      "options": [
+        "Zn",
+        "Cu",
+        "S",
+        "O"
+      ],
+      "answer": 0,
+      "explanation": "Zn goes from 0 to +2 (loses electrons = oxidation). Cu goes from +2 to 0 (gains electrons = reduction). Zn is oxidized.",
+      "topic": "Redox Reactions"
+    },
+    {
+      "id": "ch11",
+      "level": 2,
+      "question": "A gas at 300 K and 1 atm is heated to 600 K at constant volume. What happens to its pressure?",
+      "options": [
+        "It halves",
+        "It stays the same",
+        "It doubles",
+        "It quadruples"
+      ],
+      "answer": 2,
+      "explanation": "Gay-Lussac's Law: P ∝ T at constant volume. Doubling absolute temperature doubles pressure.",
+      "topic": "Gas Laws"
+    },
+    {
+      "id": "ch12",
+      "level": 3,
+      "question": "For the reaction N₂ + 3H₂ ⇌ 2NH₃, which condition shifts equilibrium toward more NH₃?",
+      "options": [
+        "Increase temperature (ΔH < 0)",
+        "Decrease pressure",
+        "Add a catalyst (changes position)",
+        "Increase pressure"
+      ],
+      "answer": 3,
+      "explanation": "The forward reaction reduces moles of gas (4 mol → 2 mol). By Le Chatelier's Principle, increasing pressure shifts equilibrium toward fewer moles = more NH₃.",
+      "topic": "Chemical Equilibrium"
+    },
+    {
+      "id": "ch13",
+      "level": 3,
+      "question": "Which functional group characterizes alcohols?",
+      "options": [
+        "–COOH",
+        "–OH",
+        "–NH₂",
+        "–CHO"
+      ],
+      "answer": 1,
+      "explanation": "Alcohols contain the –OH (hydroxyl) group. –COOH = carboxylic acid, –NH₂ = amine, –CHO = aldehyde.",
+      "topic": "Organic Chemistry"
+    },
+    {
+      "id": "ch14",
+      "level": 3,
+      "question": "The enthalpy change (ΔH) for a reaction where products have more energy than reactants is:",
+      "options": [
+        "Negative (exothermic)",
+        "Zero (isothermal)",
+        "Positive (endothermic)",
+        "Undefined"
+      ],
+      "answer": 2,
+      "explanation": "If products have more energy than reactants, the system absorbed energy: endothermic reaction, ΔH > 0.",
+      "topic": "Thermochemistry"
+    },
+    {
+      "id": "ch15",
+      "level": 4,
+      "question": "Gibbs free energy change ΔG = ΔH - TΔS. For a reaction to be spontaneous at all temperatures, it must have:",
+      "options": [
+        "ΔH > 0 and ΔS > 0",
+        "ΔH < 0 and ΔS < 0",
+        "ΔH < 0 and ΔS > 0",
+        "ΔH > 0 and ΔS < 0"
+      ],
+      "answer": 2,
+      "explanation": "ΔG = ΔH - TΔS. For ΔG < 0 (spontaneous) at ALL T, we need ΔH < 0 and ΔS > 0, so ΔG is always negative regardless of temperature.",
+      "topic": "Thermochemistry"
+    },
+    {
+      "id": "ch16",
+      "level": 4,
+      "question": "What is the oxidation state of Cr in K₂Cr₂O₇?",
+      "options": [
+        "+3",
+        "+5",
+        "+6",
+        "+7"
+      ],
+      "answer": 2,
+      "explanation": "K₂Cr₂O₇: K = +1 (×2 = +2), O = -2 (×7 = -14). Sum = 0: +2 + 2×Cr - 14 = 0. 2×Cr = 12. Cr = +6.",
+      "topic": "Redox Reactions"
+    },
+    {
+      "id": "ch17",
+      "level": 4,
+      "question": "In a galvanic cell, oxidation occurs at the:",
+      "options": [
+        "Cathode",
+        "Anode",
+        "Salt bridge",
+        "Both electrodes equally"
+      ],
+      "answer": 1,
+      "explanation": "Anode = oxidation (OAN — Oxidation At aNode). Cathode = reduction. This applies to both galvanic (spontaneous) and electrolytic cells.",
+      "topic": "Electrochemistry"
+    },
+    {
+      "id": "ch18",
+      "level": 5,
+      "question": "Benzene (C₆H₆) is unusually stable due to:",
+      "options": [
+        "Strong C–H bonds only",
+        "Aromatic resonance — delocalized π electrons over the ring",
+        "Three discrete C=C double bonds",
+        "A fully saturated ring structure"
+      ],
+      "answer": 1,
+      "explanation": "Benzene's 6 π electrons are delocalized over all 6 carbons (aromatic system), satisfying Hückel's rule (4n+2 electrons, n=1). This resonance stabilization makes it far more stable than expected from three isolated double bonds.",
+      "topic": "Organic Chemistry"
+    },
+    {
+      "id": "ch19",
+      "level": 5,
+      "question": "Radioactive decay follows first-order kinetics: N(t) = N₀e^(−λt). If an isotope has a half-life of 5730 years (like C-14), what fraction remains after 11460 years?",
+      "options": [
+        "1/2",
+        "1/3",
+        "1/4",
+        "1/8"
+      ],
+      "answer": 2,
+      "explanation": "11460 years = 2 half-lives. After 1 half-life: 1/2 remains. After 2 half-lives: (1/2)² = 1/4 remains.",
+      "topic": "Nuclear Chemistry"
+    },
+    {
+      "id": "ch20",
+      "level": 5,
+      "question": "The Schrödinger equation for hydrogen gives quantum numbers n, l, m_l, m_s. Which quantum number determines the shape of an orbital?",
+      "options": [
+        "Principal quantum number n",
+        "Azimuthal (angular momentum) quantum number l",
+        "Magnetic quantum number m_l",
+        "Spin quantum number m_s"
+      ],
+      "answer": 1,
+      "explanation": "l determines orbital shape: l=0 is s (spherical), l=1 is p (dumbbell), l=2 is d (complex). n determines energy level, m_l determines orientation, m_s is spin.",
+      "topic": "Quantum Chemistry"
+    },
+    {
+      "id": "ch21",
+      "level": 1,
+      "question": "What is the atomic number of Carbon?",
+      "options": [
+        "4",
+        "5",
+        "6",
+        "7"
+      ],
+      "answer": 2,
+      "explanation": "Carbon has 6 protons in its nucleus, so its atomic number is 6.",
+      "topic": "Atomic Structure"
+    },
+    {
+      "id": "ch22",
+      "level": 2,
+      "question": "Which type of bond forms between two nonmetals by sharing electrons?",
+      "options": [
+        "Ionic bond",
+        "Covalent bond",
+        "Metallic bond",
+        "Hydrogen bond"
+      ],
+      "answer": 1,
+      "explanation": "Covalent bonds form when two nonmetals share electrons rather than transfer them.",
+      "topic": "Chemical Bonding"
+    },
+    {
+      "id": "ch23",
+      "level": 2,
+      "question": "How many moles of H2O are produced from 2 moles of H2 reacting with O2?",
+      "options": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "answer": 1,
+      "explanation": "2H2 + O2 -> 2H2O. 2 moles H2 produces 2 moles H2O.",
+      "topic": "Stoichiometry"
+    },
+    {
+      "id": "ch24",
+      "level": 1,
+      "question": "What is the pH of a neutral solution at 25 degrees C?",
+      "options": [
+        "0",
+        "7",
+        "10",
+        "14"
+      ],
+      "answer": 1,
+      "explanation": "At 25C, neutral means [H+]=[OH-]=10^-7, so pH = 7.",
+      "topic": "Acids and Bases"
+    },
+    {
+      "id": "ch25",
+      "level": 3,
+      "question": "Doubling the concentration of a reactant quadruples the reaction rate. What is the reaction order with respect to that reactant?",
+      "options": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "answer": 2,
+      "explanation": "Rate ~ [A]^n. If rate quadruples when [A] doubles, 4 = 2^n, so n = 2 (second order).",
+      "topic": "Kinetics"
+    },
+    {
+      "id": "ch26",
+      "level": 2,
+      "question": "According to Boyles Law, if pressure is doubled at constant temperature, what happens to the volume?",
+      "options": [
+        "Doubles",
+        "Stays same",
+        "Halves",
+        "Quadruples"
+      ],
+      "answer": 2,
+      "explanation": "Boyles Law: P1V1 = P2V2. Doubling pressure halves the volume.",
+      "topic": "Gas Laws"
+    },
+    {
+      "id": "ch27",
+      "level": 2,
+      "question": "In the reaction N2 + 3H2 <=> 2NH3, what happens when pressure is increased?",
+      "options": [
+        "Equilibrium shifts left",
+        "Equilibrium shifts right",
+        "No change",
+        "Temperature changes"
+      ],
+      "answer": 1,
+      "explanation": "Increasing pressure shifts equilibrium toward the side with fewer moles of gas. Right side: 2 moles < left side: 4 moles. Shifts right.",
+      "topic": "Chemical Equilibrium"
+    },
+    {
+      "id": "ch28",
+      "level": 3,
+      "question": "What functional group identifies a carboxylic acid?",
+      "options": [
+        "-OH (hydroxyl)",
+        "-COOH (carboxyl)",
+        "-CHO (aldehyde)",
+        "-CO- (ketone)"
+      ],
+      "answer": 1,
+      "explanation": "Carboxylic acids contain the -COOH group, which makes them acidic due to the OH proton.",
+      "topic": "Organic Chemistry"
+    },
+    {
+      "id": "ch29",
+      "level": 2,
+      "question": "In the Born-Haber cycle, which step is always endothermic?",
+      "options": [
+        "Lattice energy",
+        "Atomization of metal",
+        "Formation of anion",
+        "Formation of ionic compound"
+      ],
+      "answer": 1,
+      "explanation": "Atomization (sublimation) of a solid metal always requires energy input — it is always endothermic.",
+      "topic": "Thermochemistry"
+    },
+    {
+      "id": "ch30",
+      "level": 3,
+      "question": "At the anode in an electrolytic cell, oxidation or reduction occurs?",
+      "options": [
+        "Reduction only",
+        "Oxidation only",
+        "Both simultaneously",
+        "Neither"
+      ],
+      "answer": 1,
+      "explanation": "At the anode, oxidation occurs. Remember OIL RIG: Oxidation Is Loss, Reduction Is Gain. Anode = Oxidation.",
+      "topic": "Electrochemistry"
+    },
+    {
+      "id": "ch31",
+      "level": 3,
+      "question": "What is the half-life of a first-order reaction if the rate constant k = 0.0693 min^-1?",
+      "options": [
+        "100 min",
+        "10 min",
+        "1 min",
+        "0.1 min"
+      ],
+      "answer": 1,
+      "explanation": "t1/2 = ln(2)/k = 0.693 / 0.0693 = 10 min. Classic first-order half-life formula.",
+      "topic": "Kinetics"
+    },
+    {
+      "id": "ch32",
+      "level": 2,
+      "question": "Which subatomic particle has no charge?",
+      "options": [
+        "Proton",
+        "Electron",
+        "Neutron",
+        "Positron"
+      ],
+      "answer": 2,
+      "explanation": "Neutrons are located in the nucleus and carry no electric charge.",
+      "topic": "Atomic Structure"
+    },
+    {
+      "id": "ch33",
+      "level": 4,
+      "question": "For the equilibrium PCl5 <=> PCl3 + Cl2, Kc = 4 mol/L at 250C. If [PCl5]=1 M, what is [PCl3] at equilibrium if [Cl2]=[PCl3]=x?",
+      "options": [
+        "x=1 mol/L",
+        "x=2 mol/L",
+        "x=4 mol/L",
+        "x=0.5 mol/L"
+      ],
+      "answer": 1,
+      "explanation": "Kc = [PCl3][Cl2]/[PCl5] = x*x/1 = 4. So x^2=4, x=2. Answer: x=2 mol/L.",
+      "topic": "Chemical Equilibrium"
+    },
+    {
+      "id": "ch34",
+      "level": 1,
+      "question": "In a redox reaction, the species that loses electrons is said to be:",
+      "options": [
+        "Reduced",
+        "Oxidized",
+        "Neutralized",
+        "Hydrolyzed"
+      ],
+      "answer": 1,
+      "explanation": "Oxidation is the loss of electrons. The species that loses electrons is oxidized. OIL RIG: Oxidation Is Loss.",
+      "topic": "Redox Reactions"
+    },
+    {
+      "id": "ch35",
+      "level": 3,
+      "question": "Which law states that each element of a compound contributes to its specific properties, not the compound as a whole?",
+      "options": [
+        "Daltons Law",
+        "Lavoisiers Law",
+        "Proust s Law of Definite Proportions",
+        "Avogadros Law"
+      ],
+      "answer": 2,
+      "explanation": "Proust Law of Definite Proportions states compounds have a fixed ratio of elements by mass — regardless of how they are made.",
+      "topic": "Stoichiometry"
+    }
+  ],
+  "cs": [
+    {
+      "id": "cs1",
+      "level": 1,
+      "question": "What does CPU stand for?",
+      "options": [
+        "Central Processing Unit",
+        "Computer Power Unit",
+        "Core Processor Utility",
+        "Central Program Unit"
+      ],
+      "answer": 0,
+      "explanation": "CPU stands for Central Processing Unit — the primary component that executes program instructions.",
+      "topic": "Hardware"
+    },
+    {
+      "id": "cs2",
+      "level": 1,
+      "question": "What is the output of: print(2 ** 3) in Python?",
+      "options": [
+        "5",
+        "6",
+        "8",
+        "23"
+      ],
+      "answer": 2,
+      "explanation": "** is the exponentiation operator. 2 ** 3 = 2³ = 8.",
+      "topic": "Programming"
+    },
+    {
+      "id": "cs3",
+      "level": 2,
+      "question": "What is the time complexity of binary search on a sorted array?",
+      "options": [
+        "O(1)",
+        "O(log n)",
+        "O(n)",
+        "O(n log n)"
+      ],
+      "answer": 1,
+      "explanation": "Binary search halves the search space each step: O(log n).",
+      "topic": "Algorithms"
+    },
+    {
+      "id": "cs4",
+      "level": 2,
+      "question": "In a stack data structure, which operation removes the top element?",
+      "options": [
+        "push",
+        "pop",
+        "peek",
+        "dequeue"
+      ],
+      "answer": 1,
+      "explanation": "pop removes the top element from a stack (LIFO — Last In, First Out).",
+      "topic": "Data Structures"
+    },
+    {
+      "id": "cs5",
+      "level": 3,
+      "question": "Which sorting algorithm has O(n log n) average time complexity?",
+      "options": [
+        "Bubble sort",
+        "Insertion sort",
+        "Merge sort",
+        "Selection sort"
+      ],
+      "answer": 2,
+      "explanation": "Merge sort divides and merges recursively: O(n log n) average and worst case.",
+      "topic": "Algorithms"
+    },
+    {
+      "id": "cs6",
+      "level": 1,
+      "question": "What is the decimal value of the binary number 1010?",
+      "options": [
+        "5",
+        "8",
+        "10",
+        "12"
+      ],
+      "answer": 2,
+      "explanation": "1010 in binary = 1×2³ + 0×2² + 1×2¹ + 0×2⁰ = 8 + 0 + 2 + 0 = 10.",
+      "topic": "Number Systems"
+    },
+    {
+      "id": "cs7",
+      "level": 1,
+      "question": "In Python, what does `len([1, 2, 3, 4])` return?",
+      "options": [
+        "3",
+        "4",
+        "5",
+        "Error"
+      ],
+      "answer": 1,
+      "explanation": "len() returns the number of elements in a list. [1, 2, 3, 4] has 4 elements.",
+      "topic": "Programming"
+    },
+    {
+      "id": "cs8",
+      "level": 1,
+      "question": "Which of these is NOT a primitive data type in most programming languages?",
+      "options": [
+        "Integer",
+        "Boolean",
+        "Array",
+        "Float"
+      ],
+      "answer": 2,
+      "explanation": "Arrays are composite (non-primitive) data structures. Integers, booleans, and floats are primitive types that store a single value.",
+      "topic": "Programming"
+    },
+    {
+      "id": "cs9",
+      "level": 2,
+      "question": "A function that calls itself is called:",
+      "options": [
+        "Iterative",
+        "Recursive",
+        "Polymorphic",
+        "Encapsulated"
+      ],
+      "answer": 1,
+      "explanation": "A recursive function calls itself to solve a smaller version of the same problem (must have a base case to stop).",
+      "topic": "Programming"
+    },
+    {
+      "id": "cs10",
+      "level": 2,
+      "question": "In Object-Oriented Programming, what does 'encapsulation' mean?",
+      "options": [
+        "A class inheriting from another",
+        "Bundling data and methods that operate on that data within a single unit (class)",
+        "A function acting on many types",
+        "Breaking a program into modules"
+      ],
+      "answer": 1,
+      "explanation": "Encapsulation bundles data (attributes) and behaviors (methods) in a class, and controls access via public/private modifiers.",
+      "topic": "OOP"
+    },
+    {
+      "id": "cs11",
+      "level": 2,
+      "question": "What data structure operates on FIFO (First In, First Out) principle?",
+      "options": [
+        "Stack",
+        "Queue",
+        "Tree",
+        "Hash Map"
+      ],
+      "answer": 1,
+      "explanation": "A Queue follows FIFO: the first element added is the first removed (like a line at a store). Stacks are LIFO.",
+      "topic": "Data Structures"
+    },
+    {
+      "id": "cs12",
+      "level": 3,
+      "question": "What is the time complexity of accessing an element in a hash table (average case)?",
+      "options": [
+        "O(1)",
+        "O(log n)",
+        "O(n)",
+        "O(n²)"
+      ],
+      "answer": 0,
+      "explanation": "Hash tables provide O(1) average-case access by computing an index directly from the key using a hash function.",
+      "topic": "Data Structures"
+    },
+    {
+      "id": "cs13",
+      "level": 3,
+      "question": "In Dijkstra's algorithm for finding shortest paths, which data structure is typically used for efficiency?",
+      "options": [
+        "Stack",
+        "Queue",
+        "Priority Queue (Min-Heap)",
+        "Linked List"
+      ],
+      "answer": 2,
+      "explanation": "Dijkstra's algorithm uses a min-heap/priority queue to always process the vertex with the smallest tentative distance next, achieving O((V+E) log V).",
+      "topic": "Algorithms"
+    },
+    {
+      "id": "cs14",
+      "level": 3,
+      "question": "Which SQL command is used to retrieve data from a database?",
+      "options": [
+        "INSERT",
+        "UPDATE",
+        "SELECT",
+        "DELETE"
+      ],
+      "answer": 2,
+      "explanation": "SELECT retrieves data. INSERT adds rows, UPDATE modifies rows, DELETE removes rows.",
+      "topic": "Databases"
+    },
+    {
+      "id": "cs15",
+      "level": 4,
+      "question": "Dynamic programming solves problems by:",
+      "options": [
+        "Always using recursion without memoization",
+        "Breaking into subproblems and storing results to avoid recomputation",
+        "Trying all possible solutions randomly",
+        "Dividing input in half repeatedly"
+      ],
+      "answer": 1,
+      "explanation": "DP = optimal substructure + overlapping subproblems + memoization/tabulation. Classic examples: Fibonacci, Knapsack, Longest Common Subsequence.",
+      "topic": "Algorithms"
+    },
+    {
+      "id": "cs16",
+      "level": 4,
+      "question": "In TCP/IP, which layer is responsible for end-to-end data delivery and error correction?",
+      "options": [
+        "Physical Layer",
+        "Network Layer (IP)",
+        "Transport Layer (TCP)",
+        "Application Layer (HTTP)"
+      ],
+      "answer": 2,
+      "explanation": "TCP (Transport Layer) provides reliable, ordered delivery with error checking. IP handles routing. HTTP is application-level.",
+      "topic": "Networking"
+    },
+    {
+      "id": "cs17",
+      "level": 4,
+      "question": "What is the key idea behind a binary search tree (BST)?",
+      "options": [
+        "All nodes have exactly 2 children",
+        "Left subtree contains smaller values, right subtree contains larger values",
+        "Nodes are stored in sorted array order",
+        "It's always perfectly balanced"
+      ],
+      "answer": 1,
+      "explanation": "BST property: for each node, all left descendants < node value < all right descendants. This enables O(log n) search (when balanced).",
+      "topic": "Data Structures"
+    },
+    {
+      "id": "cs18",
+      "level": 5,
+      "question": "A problem is NP-complete if it is:",
+      "options": [
+        "Solvable in polynomial time",
+        "In NP and every NP problem reduces to it in polynomial time",
+        "Impossible to solve",
+        "Solvable only by quantum computers"
+      ],
+      "answer": 1,
+      "explanation": "NP-complete = in NP (solutions verifiable in poly-time) AND NP-hard (every NP problem poly-reduces to it). Solving any NP-complete problem in poly-time would mean P=NP.",
+      "topic": "Theory of Computation"
+    },
+    {
+      "id": "cs19",
+      "level": 5,
+      "question": "In machine learning, what does 'overfitting' mean?",
+      "options": [
+        "The model is too simple to capture patterns",
+        "The model performs well on training data but poorly on new data",
+        "The training data has too many features",
+        "The model has too few parameters"
+      ],
+      "answer": 1,
+      "explanation": "Overfitting: model memorizes training data (including noise) rather than learning generalizable patterns. Symptoms: low training error, high validation error. Solution: regularization, more data, simpler model.",
+      "topic": "Machine Learning"
+    },
+    {
+      "id": "cs20",
+      "level": 5,
+      "question": "The CAP theorem states that a distributed system can guarantee at most two of three properties simultaneously. These are:",
+      "options": [
+        "Consistency, Availability, Partition tolerance",
+        "Concurrency, Accuracy, Performance",
+        "Consistency, Atomicity, Persistence",
+        "Correctness, Availability, Parallelism"
+      ],
+      "answer": 0,
+      "explanation": "CAP theorem (Brewer, 2000): a distributed system can't simultaneously guarantee Consistency (all nodes see same data), Availability (every request gets a response), and Partition tolerance (system works despite network splits). Most systems choose CP or AP.",
+      "topic": "Distributed Systems"
+    },
+    {
+      "id": "cs21",
+      "level": 2,
+      "topic": "OOP",
+      "question": "Which OOP concept allows a subclass to use methods and properties of its parent class?",
+      "options": [
+        "Encapsulation",
+        "Inheritance",
+        "Polymorphism",
+        "Abstraction"
+      ],
+      "answer": 1,
+      "explanation": "Inheritance allows a subclass to inherit attributes and methods from a parent class, enabling code reuse and hierarchical relationships."
+    },
+    {
+      "id": "cs22",
+      "level": 3,
+      "topic": "Networking",
+      "question": "What is the purpose of the TCP three-way handshake?",
+      "options": [
+        "To encrypt data before transmission",
+        "To establish a reliable connection before data transfer begins",
+        "To determine the fastest routing path",
+        "To compress packets for efficiency"
+      ],
+      "answer": 1,
+      "explanation": "The TCP three-way handshake (SYN → SYN-ACK → ACK) establishes a reliable, synchronized connection between client and server before any data is transmitted."
+    },
+    {
+      "id": "cs23",
+      "level": 3,
+      "topic": "Machine Learning",
+      "question": "In supervised learning, what does the model learn from?",
+      "options": [
+        "Unlabeled data through clustering",
+        "Labeled input-output pairs provided during training",
+        "Rewards and penalties from its environment",
+        "Randomly generated synthetic data"
+      ],
+      "answer": 1,
+      "explanation": "Supervised learning trains on labeled examples (input X, output Y), learning a mapping function f(X) ≈ Y. Contrast with unsupervised (no labels) and reinforcement learning (rewards)."
+    },
+    {
+      "id": "cs24",
+      "level": 2,
+      "topic": "Number Systems",
+      "question": "What is the decimal value of the binary number 1011?",
+      "options": [
+        "9",
+        "10",
+        "11",
+        "13"
+      ],
+      "answer": 2,
+      "explanation": "1011 in binary = 1×2³ + 0×2² + 1×2¹ + 1×2⁰ = 8 + 0 + 2 + 1 = 11."
+    },
+    {
+      "id": "cs25",
+      "level": 4,
+      "topic": "Theory of Computation",
+      "question": "The Halting Problem proves that there is no algorithm that can always correctly determine:",
+      "options": [
+        "Whether a sorting algorithm is correct",
+        "Whether an arbitrary program will halt or run forever on a given input",
+        "Whether two programs produce the same output",
+        "Whether a program uses efficient memory allocation"
+      ],
+      "answer": 1,
+      "explanation": "Turing's 1936 proof: the Halting Problem is undecidable. No general algorithm can determine, for all possible program-input pairs, whether the program eventually halts. This is a fundamental limit of computation."
+    }
+  ]
+}
