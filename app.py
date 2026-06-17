@@ -26,6 +26,11 @@ try:
 except ImportError:
     send_attention_event = None  # type: ignore[misc, assignment]
 
+try:
+    from integrations.pendo_track import send_track_event
+except ImportError:
+    send_track_event = None  # type: ignore[misc, assignment]
+
 # ──────────────────────────── CONFIG ────────────────────────────
 SESSION_LENGTH = 12          # Questions per session before showing summary
 
@@ -254,15 +259,46 @@ def start_session(subject: str):
         st.session_state.seen_ids.add(q["id"])
     st.session_state.q_start_time = time.time()
 
+    # Pendo: session_started
+    if send_track_event:
+        total_available = sum(len(qs) for qs in st.session_state.level_map.values())
+        send_track_event(
+            "session_started",
+            visitor_id=st.session_state.splunk_session_id or "anonymous",
+            properties={
+                "subject": subject,
+                "session_id": st.session_state.splunk_session_id,
+                "total_questions_available": total_available,
+                "initial_difficulty_level": 2,
+            },
+        )
+
 
 def next_question():
     if st.session_state.total >= SESSION_LENGTH:
         st.session_state.session_complete = True
         return
 
-    delta = state_to_difficulty_delta(st.session_state.attention_state or "OPTIMAL")
-    new_level = max(1, min(5, st.session_state.current_level + delta))
+    prev_level = st.session_state.current_level
+    att_state = st.session_state.attention_state or "OPTIMAL"
+    delta = state_to_difficulty_delta(att_state)
+    new_level = max(1, min(5, prev_level + delta))
     st.session_state.current_level = new_level
+
+    # Pendo: difficulty_level_adjusted
+    if send_track_event and new_level != prev_level:
+        send_track_event(
+            "difficulty_level_adjusted",
+            visitor_id=st.session_state.splunk_session_id or "anonymous",
+            properties={
+                "previous_level": prev_level,
+                "new_level": new_level,
+                "difficulty_delta": delta,
+                "attention_state": att_state,
+                "subject": st.session_state.subject,
+                "question_number": st.session_state.total,
+            },
+        )
 
     q = select_question(st.session_state.level_map, new_level)
     st.session_state.current_question = q
@@ -356,6 +392,22 @@ def render_achievement(streak: int):
         <div style="font-size:0.8rem; color:#94a3b8; margin-bottom:8px">{desc}</div>
         """, unsafe_allow_html=True)
 
+        # Pendo: achievement_unlocked
+        if send_track_event:
+            send_track_event(
+                "achievement_unlocked",
+                visitor_id=st.session_state.splunk_session_id or "anonymous",
+                properties={
+                    "streak_count": streak,
+                    "achievement_title": title,
+                    "achievement_description": desc,
+                    "subject": st.session_state.subject,
+                    "question_number": st.session_state.total,
+                    "current_level": st.session_state.current_level,
+                    "attention_state": st.session_state.attention_state,
+                },
+            )
+
 
 def render_attention_history():
     """Show a mini color-strip of the last 10 attention states."""
@@ -435,6 +487,16 @@ def render_sidebar():
             label_visibility="collapsed",
         )
         if key_input != st.session_state.gemini_api_key:
+            # Pendo: gemini_api_key_configured
+            if send_track_event:
+                send_track_event(
+                    "gemini_api_key_configured",
+                    visitor_id=st.session_state.splunk_session_id or "anonymous",
+                    properties={
+                        "key_provided": bool(key_input),
+                        "key_removed": bool(st.session_state.gemini_api_key) and not bool(key_input),
+                    },
+                )
             st.session_state.gemini_api_key = key_input
 
         render_mfa_info_box()
@@ -596,6 +658,20 @@ def _load_demo_session(subject: str):
     st.session_state.attention_history = att_hist
     st.session_state.f_att_history = f_att_hist
 
+    # Pendo: demo_session_launched
+    if send_track_event:
+        sim_total = len(patterns)
+        sim_accuracy = round(score / sim_total * 100) if sim_total else 0
+        send_track_event(
+            "demo_session_launched",
+            properties={
+                "subject": subject,
+                "simulated_score": score,
+                "simulated_total": sim_total,
+                "simulated_accuracy_pct": sim_accuracy,
+            },
+        )
+
 
 # ──────────────────────────── SESSION SUMMARY ────────────────────────────
 def render_session_summary():
@@ -625,6 +701,38 @@ def render_session_summary():
         grade, grade_color = "D", "#ef4444"
 
     subj_color = SUBJECT_COLORS.get(st.session_state.subject or "physics", "#7c3aed")
+
+    # Pendo: session_completed
+    if send_track_event:
+        topics = list({h.get("topic", "?") for h in hist})
+        max_streak = 0
+        _cur = 0
+        for h in hist:
+            if h.get("correct"):
+                _cur += 1
+                max_streak = max(max_streak, _cur)
+            else:
+                _cur = 0
+        send_track_event(
+            "session_completed",
+            visitor_id=st.session_state.splunk_session_id or "anonymous",
+            properties={
+                "subject": st.session_state.subject,
+                "score": score,
+                "total": total,
+                "accuracy_pct": accuracy,
+                "grade": grade,
+                "avg_response_time_ms": round(get_avg_response_time()),
+                "dominant_attention_state": dominant_state,
+                "max_streak": max_streak,
+                "topics_covered_count": len(topics),
+                "optimal_count": state_counts.get("OPTIMAL", 0),
+                "underloaded_count": state_counts.get("UNDERLOADED", 0),
+                "approaching_count": state_counts.get("APPROACHING", 0),
+                "overloaded_count": state_counts.get("OVERLOADED", 0),
+                "session_id": st.session_state.splunk_session_id,
+            },
+        )
 
     st.markdown(f"""
     <div style="text-align:center; padding: 30px 10px 16px;">
@@ -757,6 +865,37 @@ def render_session_summary():
     col_btn1, col_btn2 = st.columns(2)
     with col_btn1:
         if st.button("🔄 Try Again (Same Subject)", type="primary", use_container_width=True):
+            # Pendo: session_restarted (capture before start_session resets state)
+            if send_track_event:
+                prev_total = st.session_state.total
+                prev_score = st.session_state.score
+                prev_acc = round(prev_score / prev_total * 100) if prev_total else 0
+                prev_sc = {}
+                for h in st.session_state.session_history:
+                    prev_sc[h.get("state", "?")] = prev_sc.get(h.get("state", "?"), 0) + 1
+                prev_dom = max(prev_sc, key=prev_sc.get) if prev_sc else "OPTIMAL"
+                if prev_acc >= 90:
+                    prev_grade = "A+"
+                elif prev_acc >= 75:
+                    prev_grade = "A"
+                elif prev_acc >= 60:
+                    prev_grade = "B"
+                elif prev_acc >= 45:
+                    prev_grade = "C"
+                else:
+                    prev_grade = "D"
+                send_track_event(
+                    "session_restarted",
+                    visitor_id=st.session_state.splunk_session_id or "anonymous",
+                    properties={
+                        "subject": st.session_state.subject,
+                        "previous_score": prev_score,
+                        "previous_total": prev_total,
+                        "previous_accuracy_pct": prev_acc,
+                        "previous_grade": prev_grade,
+                        "previous_dominant_state": prev_dom,
+                    },
+                )
             start_session(st.session_state.subject)
             st.rerun()
     with col_btn2:
@@ -896,12 +1035,31 @@ def handle_answer(selected_idx: int, q: dict):
     correct_idx = q["answer"]
     is_correct = (selected_idx == correct_idx)
 
+    previous_streak = st.session_state.streak
+    previous_state = st.session_state.attention_state
+
     st.session_state.total += 1
     if is_correct:
         st.session_state.score += 1
         st.session_state.streak += 1
     else:
         st.session_state.streak = 0
+
+    # Pendo: streak_broken
+    if send_track_event and not is_correct and previous_streak >= 1:
+        send_track_event(
+            "streak_broken",
+            visitor_id=st.session_state.splunk_session_id or "anonymous",
+            properties={
+                "broken_streak_length": previous_streak,
+                "subject": st.session_state.subject,
+                "topic": q.get("topic", ""),
+                "level": q.get("level", 2),
+                "attention_state": previous_state,
+                "response_time_ms": round(response_time_ms),
+                "question_number": st.session_state.total,
+            },
+        )
 
     avg_time = get_avg_response_time()
     snap = compute_attention(
@@ -930,6 +1088,48 @@ def handle_answer(selected_idx: int, q: dict):
     st.session_state.attention_state = snap.state
     st.session_state.answered = True
     st.session_state.selected_option = selected_idx
+
+    # Pendo: question_answered
+    if send_track_event:
+        send_track_event(
+            "question_answered",
+            visitor_id=st.session_state.splunk_session_id or "anonymous",
+            properties={
+                "subject": st.session_state.subject,
+                "question_id": str(q.get("id", "")),
+                "topic": q.get("topic", ""),
+                "level": q.get("level", 2),
+                "is_correct": is_correct,
+                "response_time_ms": round(response_time_ms),
+                "attention_state": snap.state,
+                "f_att": snap.f_att,
+                "r": snap.r,
+                "S": snap.S,
+                "streak": st.session_state.streak,
+                "score": st.session_state.score,
+                "total": st.session_state.total,
+                "question_number": st.session_state.total,
+            },
+        )
+
+    # Pendo: attention_state_changed
+    if send_track_event and previous_state and previous_state != snap.state:
+        send_track_event(
+            "attention_state_changed",
+            visitor_id=st.session_state.splunk_session_id or "anonymous",
+            properties={
+                "previous_state": previous_state,
+                "new_state": snap.state,
+                "f_att": snap.f_att,
+                "r": snap.r,
+                "S": snap.S,
+                "question_number": st.session_state.total,
+                "subject": st.session_state.subject,
+                "topic": q.get("topic", ""),
+                "is_correct": is_correct,
+                "response_time_ms": round(response_time_ms),
+            },
+        )
 
     # AI explanation with session context
     wrong_context = q["question"] if not is_correct else None
