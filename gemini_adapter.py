@@ -9,6 +9,11 @@ Demo responses are topic-aware for a more personalized experience.
 import os
 from typing import Optional
 
+try:
+    from integrations.pendo_track import send_track_event
+except ImportError:
+    send_track_event = None  # type: ignore[misc, assignment]
+
 
 # ── Topic-specific insights (used in demo mode for extra richness) ──
 _TOPIC_HOOKS = {
@@ -199,13 +204,51 @@ def get_explanation(
 
     session_stats (optional): dict with keys score, total, streak, accuracy_pct, trend
     """
+    source = "demo"
     if api_key:
         try:
-            return _call_gemini(state, topic, subject, wrong_answer_text, api_key, session_stats)
+            result = _call_gemini(state, topic, subject, wrong_answer_text, api_key, session_stats)
+            source = "gemini"
         except Exception:
-            pass
+            result = None
 
-    return _get_demo_response(state, subject, topic, session_stats)
+        if result is not None:
+            # Pendo: ai_explanation_generated
+            if send_track_event:
+                send_track_event(
+                    "ai_explanation_generated",
+                    properties={
+                        "source": source,
+                        "attention_state": state,
+                        "topic": topic,
+                        "subject": subject,
+                        "has_wrong_answer_context": wrong_answer_text is not None,
+                        "session_trend": session_stats.get("trend") if session_stats else None,
+                        "accuracy_pct": round(session_stats.get("accuracy_pct", 0)) if session_stats else None,
+                        "streak": session_stats.get("streak") if session_stats else None,
+                    },
+                )
+            return result
+
+    demo_result = _get_demo_response(state, subject, topic, session_stats)
+
+    # Pendo: ai_explanation_generated
+    if send_track_event:
+        send_track_event(
+            "ai_explanation_generated",
+            properties={
+                "source": "demo",
+                "attention_state": state,
+                "topic": topic,
+                "subject": subject,
+                "has_wrong_answer_context": wrong_answer_text is not None,
+                "session_trend": session_stats.get("trend") if session_stats else None,
+                "accuracy_pct": round(session_stats.get("accuracy_pct", 0)) if session_stats else None,
+                "streak": session_stats.get("streak") if session_stats else None,
+            },
+        )
+
+    return demo_result
 
 
 def _call_gemini(
