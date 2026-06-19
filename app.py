@@ -26,6 +26,8 @@ try:
 except ImportError:
     send_attention_event = None  # type: ignore[misc, assignment]
 
+from integrations.pendo import inject_pendo
+
 # ──────────────────────────── CONFIG ────────────────────────────
 SESSION_LENGTH = 12          # Questions per session before showing summary
 
@@ -974,6 +976,7 @@ def handle_answer(selected_idx: int, q: dict):
 
 # ──────────────────────────── MAIN ────────────────────────────
 def main():
+    inject_pendo()
     init_state()
     render_sidebar()
 
