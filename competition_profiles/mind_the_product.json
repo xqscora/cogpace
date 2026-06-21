@@ -14,7 +14,8 @@
     "splunk_hec": false,
     "pendo": true,
     "local_event_log": true,
-    "demo_mode": true
+    "demo_mode": true,
+    "llm_polish": false
   },
   "card_highlights": [
     {"icon": "📊", "title": "Pendo Events", "body": "Track session funnel, streak milestones, and state transitions."},

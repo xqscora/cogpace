@@ -1,8 +1,8 @@
 """
-Unified AI tutor — Gemini live + rich offline fallback + follow-up chat.
+AI layer — OPTIONAL polish only. Pedagogy is decided by mfa_pedagogy + explanation_engine.
 
-Loads API key from sidebar, GEMINI_API_KEY, or GOOGLE_API_KEY (.env via python-dotenv).
-Competition profile injects narrative-specific system prefix.
+Default path: mfa_engine (deterministic).
+LLM: rephrase only; cannot change tone/depth/blocks (Cora zero-preset / P3 echo rule).
 """
 
 from __future__ import annotations
@@ -19,8 +19,8 @@ try:
 except ImportError:
     send_track_event = None  # type: ignore[misc, assignment]
 
-from gemini_adapter import _DEMO_RESPONSES, _TOPIC_HOOKS, _get_demo_response
-from mfa_attention import state_to_gemini_instruction
+from explanation_engine import build_plan_and_explanation, followup_without_llm
+from mfa_pedagogy import PedagogyPlan
 
 
 def resolve_api_key(explicit: str | None = None) -> str | None:
@@ -28,136 +28,122 @@ def resolve_api_key(explicit: str | None = None) -> str | None:
     return key or None
 
 
+def llm_polish_enabled(profile: Optional[dict[str, Any]]) -> bool:
+    if not profile:
+        return False
+    return bool(profile.get("features", {}).get("llm_polish", False))
+
+
 def get_explanation(
     *,
-    state: str,
-    topic: str,
-    subject: str,
-    wrong_answer_text: Optional[str] = None,
+    snap,
+    question: dict[str, Any],
+    history: list[dict[str, Any]],
+    response_time_ms: float,
+    avg_rt: float,
+    is_correct: bool,
+    subject: str | None,
+    cerome=None,
+    spreading_topic: str | None = None,
     api_key: Optional[str] = None,
-    session_stats: Optional[dict] = None,
     profile: Optional[dict[str, Any]] = None,
-) -> tuple[str, str]:
-    """Returns (text, source) where source is 'gemini' or 'demo'."""
-    key = resolve_api_key(api_key)
-    if key:
-        try:
-            text = _call_gemini(
-                state=state,
-                topic=topic,
-                subject=subject,
-                wrong_answer_text=wrong_answer_text,
-                api_key=key,
-                session_stats=session_stats,
-                profile=profile,
-            )
-            _track_ai("gemini", state, topic, subject, wrong_answer_text, session_stats)
-            return text, "gemini"
-        except Exception:
-            pass
+    session_stats: Optional[dict] = None,
+) -> tuple[str, str, PedagogyPlan, dict[str, Any]]:
+    """
+    Returns (text, source, plan, audit).
+    source ∈ {'mfa_engine', 'mfa_engine+polish', 'mfa_engine'} — never raw 'gemini'.
+    """
+    plan, text, audit = build_plan_and_explanation(
+        snap=snap,
+        question=question,
+        history=history,
+        response_time_ms=response_time_ms,
+        avg_rt=avg_rt,
+        is_correct=is_correct,
+        subject=subject,
+        cerome=cerome,
+        spreading_topic=spreading_topic,
+    )
+    source = "mfa_engine"
 
-    text = _get_demo_response(state, subject, topic, session_stats)
-    _track_ai("demo", state, topic, subject, wrong_answer_text, session_stats)
-    return text, "demo"
+    if llm_polish_enabled(profile) and resolve_api_key(api_key):
+        polished = _polish_only(text, plan, api_key)
+        if polished:
+            text = polished
+            source = "mfa_engine+polish"
+            audit["polish"] = True
+
+    _track(source, plan, question, session_stats)
+    return text, source, plan, audit
 
 
 def chat_followup(
     *,
     user_message: str,
     topic: str,
-    subject: str,
-    state: str,
-    last_explanation: str,
+    plan: Optional[PedagogyPlan],
     api_key: Optional[str] = None,
     profile: Optional[dict[str, Any]] = None,
-    session_stats: Optional[dict] = None,
 ) -> tuple[str, str]:
-    """Answer a student follow-up question in context."""
-    key = resolve_api_key(api_key)
-    prefix = (profile or {}).get("ai_system_prefix", "You are CogPace AI, a STEM tutor.")
-    stats_line = ""
-    if session_stats:
-        stats_line = (
-            f"Session: {session_stats.get('accuracy_pct', 0):.0f}% accuracy, "
-            f"streak {session_stats.get('streak', 0)}, trend {session_stats.get('trend', 'early')}."
+    text = followup_without_llm(user_message, topic=topic, plan=plan)
+    source = "mfa_followup"
+
+    if llm_polish_enabled(profile) and resolve_api_key(api_key):
+        polished = _polish_followup(text, user_message, topic, api_key)
+        if polished:
+            return polished, "mfa_followup+polish"
+
+    return text, source
+
+
+def _polish_only(text: str, plan: PedagogyPlan, api_key: str) -> str | None:
+    """Rephrase for readability — MUST preserve all pedagogical claims."""
+    try:
+        import google.generativeai as genai
+
+        genai.configure(api_key=api_key)
+        model = genai.GenerativeModel("gemini-2.0-flash")
+        prompt = (
+            "Rephrase for clarity ONLY. Do NOT add facts, change tone, or change teaching depth. "
+            f"Locked tone={plan.tone}, depth={plan.depth}. Keep markdown structure.\n\n"
+            f"{text}"
         )
-
-    if key:
-        try:
-            import google.generativeai as genai
-
-            genai.configure(api_key=key)
-            model = genai.GenerativeModel("gemini-2.0-flash")
-            prompt = (
-                f"{prefix}\n\n"
-                f"Student attention state: {state}. Subject: {subject}. Topic: {topic}. {stats_line}\n"
-                f"Your last explanation:\n{last_explanation}\n\n"
-                f"Student follow-up question:\n{user_message}\n\n"
-                "Answer in under 150 words. Match tone to their attention state "
-                "(challenge if OPTIMAL, simplify if OVERLOADED). Be warm and precise."
-            )
-            response = model.generate_content(prompt)
-            return response.text.strip(), "gemini"
-        except Exception:
-            pass
-
-    fallback = (
-        f"**Offline mode:** Great question about {topic}.\n\n"
-        f"Core idea: {_TOPIC_HOOKS.get(topic, 'Break the problem into what you know vs what you need.')}\n\n"
-        f"*Add a Gemini API key in the sidebar for live follow-ups.*"
-    )
-    return fallback, "demo"
+        return model.generate_content(prompt).text.strip()
+    except Exception:
+        return None
 
 
-def _call_gemini(
-    *,
-    state: str,
-    topic: str,
-    subject: str,
-    wrong_answer_text: Optional[str],
-    api_key: str,
-    session_stats: Optional[dict],
-    profile: Optional[dict[str, Any]],
-) -> str:
-    import google.generativeai as genai
+def _polish_followup(text: str, user_message: str, topic: str, api_key: str) -> str | None:
+    try:
+        import google.generativeai as genai
 
-    genai.configure(api_key=api_key)
-    model = genai.GenerativeModel("gemini-2.0-flash")
-    instruction = state_to_gemini_instruction(state, topic, wrong_answer_text, session_stats)
-    prefix = (profile or {}).get(
-        "ai_system_prefix",
-        "You are CogPace AI, an MFA-grounded STEM tutor.",
-    )
-    system_prompt = (
-        f"{prefix} "
-        "F_att(r)=S/r² measures engagement. "
-        "Give SHORT responses (max 120 words) matching the student's attention state. "
-        "Sound like a mentor, not a textbook."
-    )
-    response = model.generate_content(f"{system_prompt}\n\n{instruction}")
-    return response.text.strip()
+        genai.configure(api_key=api_key)
+        model = genai.GenerativeModel("gemini-2.0-flash")
+        prompt = (
+            f"Polish wording only. Topic={topic}. Student asked: {user_message}\n\n"
+            f"Draft (keep all claims):\n{text}"
+        )
+        return model.generate_content(prompt).text.strip()
+    except Exception:
+        return None
 
 
-def _track_ai(
+def _track(
     source: str,
-    state: str,
-    topic: str,
-    subject: str,
-    wrong_answer_text: Optional[str],
+    plan: PedagogyPlan,
+    question: dict[str, Any],
     session_stats: Optional[dict],
 ) -> None:
     if not send_track_event:
         return
     send_track_event(
-        "ai_explanation_generated",
+        "mfa_explanation_generated",
         properties={
             "source": source,
-            "attention_state": state,
-            "topic": topic,
-            "subject": subject,
-            "has_wrong_answer_context": wrong_answer_text is not None,
+            "tone": plan.tone,
+            "depth": plan.depth,
+            "topic": question.get("topic"),
+            "capture_risk": plan.capture_risk,
             "session_trend": session_stats.get("trend") if session_stats else None,
-            "accuracy_pct": round(session_stats.get("accuracy_pct", 0)) if session_stats else None,
-            "streak": session_stats.get("streak") if session_stats else None,
         },
     )

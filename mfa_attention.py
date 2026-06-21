@@ -121,6 +121,33 @@ def compute_attention(
     )
 
 
+def snapshot_with_effective_r(
+    snap: AttentionSnapshot,
+    r_effective: float,
+    n_answered: int,
+) -> AttentionSnapshot:
+    """Re-score after topic magnetization lowers r (induced magnetization)."""
+    r_effective = max(r_effective, 0.08)
+    f_att = snap.S / (r_effective ** 2)
+    if f_att >= 2.0:
+        state, message = "OPTIMAL", "🌟 You're in the zone! Keep going."
+    elif f_att >= 0.8:
+        state, message = "UNDERLOADED", "😴 This might be a bit easy. Let's raise the challenge."
+    elif f_att >= 0.25:
+        state, message = "APPROACHING", "⚠️ Attention is straining. Let's slow down and clarify."
+    else:
+        state, message = "OVERLOADED", "🆘 Cognitive overload detected. Time to simplify and reground."
+    confidence = min(1.0, n_answered / 5.0)
+    return AttentionSnapshot(
+        state=state,
+        f_att=round(f_att, 3),
+        r=round(r_effective, 3),
+        S=snap.S,
+        confidence=round(confidence, 2),
+        message=message,
+    )
+
+
 def state_to_difficulty_delta(state: str) -> int:
     """
     Suggest a difficulty adjustment based on attention state.

@@ -14,7 +14,8 @@
     "splunk_hec": true,
     "pendo": false,
     "local_event_log": true,
-    "demo_mode": true
+    "demo_mode": true,
+    "llm_polish": false
   },
   "card_highlights": [
     {"icon": "📈", "title": "HEC Integration", "body": "integrations/splunk_hec.py ships attention transitions to Splunk."},

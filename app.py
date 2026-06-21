@@ -28,7 +28,8 @@ from aura_cerome_lite import (
     infer_learner_cerome,
 )
 from competition_profiles import list_profile_ids, load_profile, resolve_profile_from_query
-from mfa_attention import compute_attention, state_to_color, state_to_difficulty_delta
+from mfa_attention import compute_attention, snapshot_with_effective_r, state_to_color, state_to_difficulty_delta
+from topic_field import TopicField
 
 try:
     from integrations.splunk_hec import send_attention_event
@@ -216,6 +217,9 @@ def init_state():
         "chat_messages": [],
         "ai_source": "demo",
         "profile_id": None,
+        "topic_field": None,
+        "last_pedagogy_plan": None,
+        "pedagogy_audit": None,
     }
     for k, v in defaults.items():
         if k not in st.session_state:
@@ -289,7 +293,10 @@ def start_session(subject: str):
     st.session_state.f_att_history = []
     st.session_state.splunk_session_id = f"cogpace-{int(time.time())}-{random.randint(1000, 9999)}"
     st.session_state.chat_messages = []
-    st.session_state.ai_source = "demo"
+    st.session_state.ai_source = "mfa_engine"
+    st.session_state.topic_field = TopicField.from_question_bank(load_questions())
+    st.session_state.last_pedagogy_plan = None
+    st.session_state.pedagogy_audit = None
 
     q = select_question(st.session_state.level_map, 2)
     st.session_state.current_question = q
@@ -552,8 +559,12 @@ def render_sidebar():
                 st.rerun()
 
         st.divider()
-        st.markdown("### 🔑 Gemini API Key")
-        st.caption("Optional — live AI tutor. Also reads `.env` GEMINI_API_KEY.")
+        st.markdown("### 🔑 LLM polish (optional)")
+        st.caption("Off by default. MFA engine decides teaching; Gemini may only rephrase.")
+        if profile_feature("llm_polish"):
+            st.success("Profile enables polish")
+        else:
+            st.info("Profile: MFA-only (enable llm_polish in profile JSON to allow rephrase)")
         env_key = resolve_api_key()
         if env_key and not st.session_state.gemini_api_key:
             st.caption("✅ Loaded from environment")
@@ -1105,10 +1116,18 @@ def render_question():
                 )
 
         if st.session_state.explanation:
-            src = st.session_state.get("ai_source", "demo")
-            src_badge = "🟢 Gemini live" if src == "gemini" else "📦 Offline tutor"
-            with st.expander(f"🤖 AI Explanation ({src_badge})", expanded=True):
+            src_badge = {
+                "mfa_engine": "🧲 MFA engine",
+                "mfa_engine+polish": "🧲 MFA + LLM polish",
+                "mfa_followup": "🧲 MFA follow-up",
+                "mfa_followup+polish": "🧲 MFA follow-up + polish",
+            }.get(src, f"🧲 {src}")
+            with st.expander(f"🧲 Tutor output ({src_badge})", expanded=True):
                 st.markdown(st.session_state.explanation)
+
+            if st.session_state.pedagogy_audit:
+                with st.expander("📜 MFA decision trace (zero LLM)", expanded=False):
+                    st.json(st.session_state.pedagogy_audit)
 
             if profile_feature("chat_followup"):
                 st.markdown("**💬 Ask a follow-up**")
@@ -1120,20 +1139,9 @@ def render_question():
                     reply, rsrc = chat_followup(
                         user_message=prompt,
                         topic=q.get("topic", "this topic"),
-                        subject=st.session_state.subject or "physics",
-                        state=st.session_state.attention_state or "OPTIMAL",
-                        last_explanation=st.session_state.explanation or "",
+                        plan=st.session_state.last_pedagogy_plan,
                         api_key=st.session_state.gemini_api_key or None,
                         profile=get_active_profile(),
-                        session_stats={
-                            "score": st.session_state.score,
-                            "total": st.session_state.total,
-                            "streak": st.session_state.streak,
-                            "accuracy_pct": (
-                                st.session_state.score / st.session_state.total * 100
-                            ) if st.session_state.total else 0,
-                            "trend": "stable",
-                        },
                     )
                     st.session_state.chat_messages.append({"role": "assistant", "content": reply})
                     st.rerun()
@@ -1193,12 +1201,26 @@ def handle_answer(selected_idx: int, q: dict):
         n_answered=st.session_state.total,
     )
 
+    tf: TopicField | None = st.session_state.topic_field
+    topic_name = q.get("topic", "General")
+    if tf:
+        tf.decay()
+        r_eff = tf.effective_r(topic_name, snap.r)
+        if abs(r_eff - snap.r) > 0.01:
+            snap = snapshot_with_effective_r(snap, r_eff, st.session_state.total)
+        spreading = tf.spreading_hint(topic_name, st.session_state.subject)
+    else:
+        spreading = None
+
+    cerome = infer_learner_cerome(st.session_state.session_history) if profile_feature("cerome_panel") else None
+
     # Record history
     st.session_state.session_history.append({
         "correct": is_correct,
         "time_ms": response_time_ms,
         "level": q.get("level", 2),
-        "topic": q.get("topic", ""),
+        "topic": topic_name,
+        "subject": st.session_state.subject,
         "state": snap.state,
     })
     st.session_state.attention_history.append(snap.state)
@@ -1256,7 +1278,6 @@ def handle_answer(selected_idx: int, q: dict):
         )
 
     # AI explanation with session context
-    wrong_context = q["question"] if not is_correct else None
     total = st.session_state.total
     score = st.session_state.score
 
@@ -1271,17 +1292,27 @@ def handle_answer(selected_idx: int, q: dict):
         "trend": trend,
     }
 
-    explanation, ai_src = get_explanation(
-        state=snap.state,
-        topic=q.get("topic", "this topic"),
+    explanation, ai_src, ped_plan, ped_audit = get_explanation(
+        snap=snap,
+        question=q,
+        history=st.session_state.session_history[:-1],
+        response_time_ms=response_time_ms,
+        avg_rt=avg_time,
+        is_correct=is_correct,
         subject=st.session_state.subject,
-        wrong_answer_text=wrong_context,
+        cerome=cerome,
+        spreading_topic=spreading,
         api_key=st.session_state.gemini_api_key or None,
-        session_stats=session_stats,
         profile=get_active_profile(),
+        session_stats=session_stats,
     )
     st.session_state.explanation = explanation
     st.session_state.ai_source = ai_src
+    st.session_state.last_pedagogy_plan = ped_plan
+    st.session_state.pedagogy_audit = ped_audit
+
+    if tf:
+        tf.bind(topic_name, f_att=snap.f_att, correct=is_correct, subject=st.session_state.subject)
 
     if profile_feature("local_event_log") and append_event and st.session_state.splunk_session_id:
         append_event(
@@ -1297,6 +1328,8 @@ def handle_answer(selected_idx: int, q: dict):
                 "correct": is_correct,
                 "response_ms": int(response_time_ms),
                 "ai_source": ai_src,
+                "pedagogy_tone": ped_plan.tone,
+                "pedagogy_depth": ped_plan.depth,
                 "profile": get_active_profile().get("id"),
             },
         )

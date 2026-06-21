@@ -14,7 +14,8 @@
     "splunk_hec": false,
     "pendo": false,
     "local_event_log": true,
-    "demo_mode": true
+    "demo_mode": true,
+    "llm_polish": false
   },
   "card_highlights": [
     {"icon": "🧲", "title": "Attention-Aware", "body": "MFA computes engagement from response speed and accuracy — not just right/wrong."},

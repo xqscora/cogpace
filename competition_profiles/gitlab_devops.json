@@ -15,7 +15,8 @@
     "pendo": false,
     "local_event_log": true,
     "demo_mode": true,
-    "export_json": true
+    "export_json": true,
+    "llm_polish": false
   },
   "card_highlights": [
     {"icon": "📡", "title": "JSON Event Stream", "body": "Every answer emits session_id, state, f_att, r, S — DevOps-ready schema."},

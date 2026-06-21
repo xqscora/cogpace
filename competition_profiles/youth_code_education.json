@@ -15,7 +15,8 @@
     "pendo": false,
     "local_event_log": true,
     "demo_mode": true,
-    "career_insights": true
+    "career_insights": true,
+    "llm_polish": false
   },
   "card_highlights": [
     {"icon": "📊", "title": "Attention Profile", "body": "Session summary shows % time in each MFA state — a cognitive fingerprint per subject."},

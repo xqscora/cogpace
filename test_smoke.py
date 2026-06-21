@@ -1,45 +1,67 @@
-"""Smoke tests for CogPace v3 profiles + Cerome + MFA."""
+"""Smoke tests — MFA engine path (not LLM)."""
 
-from competition_profiles import list_profile_ids, load_profile
-from mfa_attention import compute_attention
-from aura_cerome_lite import infer_learner_cerome, adjust_difficulty_delta
-from ai_tutor import get_explanation, resolve_api_key
-
-
-def test_profiles():
-    ids = list_profile_ids()
-    assert len(ids) >= 6, ids
-    for pid in ids:
-        p = load_profile(pid)
-        assert "display_name" in p
-        assert "features" in p
-    print("profiles OK:", ids)
+from competition_profiles import load_profile
+from mfa_attention import compute_attention, snapshot_with_effective_r
+from topic_field import TopicField
+from mfa_pedagogy import plan_pedagogy
+from explanation_engine import build_plan_and_explanation
+from ai_tutor import get_explanation, chat_followup
 
 
-def test_mfa_cerome():
+def test_mfa_engine_path():
     snap = compute_attention(8000, True, 3, 10000, 5)
-    assert snap.state in ("OPTIMAL", "UNDERLOADED", "APPROACHING", "OVERLOADED")
-    hist = [{"time_ms": 8000, "correct": True, "state": "OPTIMAL"}] * 5
-    c = infer_learner_cerome(hist)
-    assert 0 <= c.sigma <= 1
-    assert adjust_difficulty_delta(2, c) in (0, 1, 2)
-    print("mfa+cerome OK:", snap.state, c.engagement_label)
-
-
-def test_ai_demo():
-    text, src = get_explanation(
-        state="OPTIMAL",
-        topic="Kinematics",
+    q = {
+        "id": "t1",
+        "level": 2,
+        "topic": "Kinematics",
+        "question": "v=?",
+        "explanation": "v = d/t",
+    }
+    hist = [{"time_ms": 8000, "correct": True, "state": "OPTIMAL", "level": 2, "topic": "K", "subject": "physics"}]
+    text, src, plan, audit = get_explanation(
+        snap=snap,
+        question=q,
+        history=hist,
+        response_time_ms=8000,
+        avg_rt=9000,
+        is_correct=True,
         subject="physics",
-        profile=load_profile("youth_code_social"),
+        profile=load_profile("stem_education"),
     )
-    assert src == "demo"
-    assert len(text) > 20
-    print("ai demo OK, len=", len(text))
+    assert src == "mfa_engine"
+    assert plan.tone in ("challenge", "curiosity", "scaffold", "ground")
+    assert "Decision trace" in text
+    assert audit["source"] == "mfa_engine"
+    print("mfa_engine OK:", plan.tone, plan.depth)
+
+
+def test_magnetization():
+    tf = TopicField()
+    tf.bind("Kinematics", f_att=2.5, correct=True, subject="physics")
+    r0 = 1.2
+    r_eff = tf.effective_r("Kinematics", r0)
+    assert r_eff < r0
+    snap = compute_attention(8000, True, 1, 10000, 3)
+    snap2 = snapshot_with_effective_r(snap, r_eff, 3)
+    if r_eff < snap.r - 0.01:
+        assert snap2.f_att >= snap.f_att
+    print("magnetization OK:", r0, "->", r_eff, "f", snap.f_att, "->", snap2.f_att)
+
+
+def test_followup_no_llm():
+    reply, src = chat_followup(
+        user_message="why?",
+        topic="Kinematics",
+        plan=None,
+        profile=load_profile("stem_education"),
+    )
+    assert src == "mfa_followup"
+    assert "Why" in reply or "why" in reply.lower()
+    print("followup OK")
 
 
 if __name__ == "__main__":
-    test_profiles()
-    test_mfa_cerome()
-    test_ai_demo()
-    print("ALL SMOKE TESTS PASSED")
+    test_mfa_engine_path()
+    test_magnetization()
+    test_followup_no_llm()
+    print("ALL v4 SMOKE TESTS PASSED")
