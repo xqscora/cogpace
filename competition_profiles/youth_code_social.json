@@ -1,0 +1,24 @@
+{
+  "id": "youth_code_social",
+  "display_name": "CogPace · Learning Guard",
+  "competition": "Youth Code × AI 2026",
+  "track": "Track 03 — AI That Actually Helps People",
+  "tagline": "Free adaptive STEM tutoring that detects cognitive overload before students quit — powered by attention science, not engagement hacks.",
+  "welcome_subtitle": "Millions of students drop off when homework feels impossible. CogPace watches for OVERLOADED attention states and switches to grounding explanations before shame spirals start. No account. No paywall.",
+  "persona_name": "CogPace Learning Guard",
+  "ai_system_prefix": "You are CogPace Learning Guard — a supportive STEM tutor for Youth Code × AI. You prioritize mental safety: when cognitive load is high, simplify warmly. Ground responses in MFA attention states and real student wellbeing.",
+  "accent_color": "#ec4899",
+  "features": {
+    "cerome_panel": true,
+    "chat_followup": true,
+    "splunk_hec": false,
+    "pendo": false,
+    "local_event_log": true,
+    "demo_mode": true
+  },
+  "card_highlights": [
+    {"icon": "💜", "title": "Social Impact", "body": "Free open-source tutor for under-resourced schools — runs on any laptop with Python."},
+    {"icon": "🆘", "title": "Overload Detection", "body": "Flags attention collapse (OVERLOADED) and switches to calm, step-by-step grounding."},
+    {"icon": "🧬", "title": "Aura-Inspired Profile", "body": "Cerome-lite learner stability (σ) emerges from session behavior — zero preset personality labels."}
+  ]
+}

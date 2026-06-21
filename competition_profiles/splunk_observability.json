@@ -1,0 +1,24 @@
+{
+  "id": "splunk_observability",
+  "display_name": "CogPace · Splunk HEC",
+  "competition": "Splunk Agentic Ops Hackathon",
+  "track": "Observability — sourcetype cogpace:attention:v1",
+  "tagline": "Stream attention telemetry from adaptive tutoring sessions into Splunk for anomaly detection on cognitive overload.",
+  "welcome_subtitle": "Set SPLUNK_HEC_URL and SPLUNK_HEC_TOKEN to stream live MFA events. Dashboards can alert when OVERLOADED rate spikes — learning incidents before dropout.",
+  "persona_name": "CogPace Telemetry",
+  "ai_system_prefix": "You are CogPace Telemetry assistant. Help SREs interpret attention events in Splunk: sourcetype cogpace:attention:v1, fields f_att, r, S, attention_state.",
+  "accent_color": "#65a637",
+  "features": {
+    "cerome_panel": false,
+    "chat_followup": true,
+    "splunk_hec": true,
+    "pendo": false,
+    "local_event_log": true,
+    "demo_mode": true
+  },
+  "card_highlights": [
+    {"icon": "📈", "title": "HEC Integration", "body": "integrations/splunk_hec.py ships attention transitions to Splunk."},
+    {"icon": "🔔", "title": "State Alerts", "body": "OVERLOADED / APPROACHING spikes = cognitive incident signals."},
+    {"icon": "🧲", "title": "MFA Core", "body": "Zero-preset scoring in mfa_attention.py — telemetry reflects math, not hardcoded branches."}
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "id": "youth_code_education",
+  "display_name": "CogPace · Career STEM Coach",
+  "competition": "Youth Code × AI 2026",
+  "track": "Track 04 — What Do I Even Do With My Life?",
+  "tagline": "Map your attention strengths across Physics, Math, Chemistry, and CS — then get AI coaching on where your cognitive profile fits in real STEM careers.",
+  "welcome_subtitle": "Career planning tools ask what you like. CogPace measures how you learn: where you hyperfocus (OPTIMAL), where you drift (UNDERLOADED), and where you need scaffolding (OVERLOADED). That pattern is data for choosing STEM paths.",
+  "persona_name": "CogPace Career Coach",
+  "ai_system_prefix": "You are CogPace Career Coach for high school students exploring STEM. Connect attention patterns (MFA states) to realistic career directions — research, engineering, medicine, CS — without hype. Keep advice age-appropriate and encouraging.",
+  "accent_color": "#06b6d4",
+  "features": {
+    "cerome_panel": true,
+    "chat_followup": true,
+    "splunk_hec": false,
+    "pendo": false,
+    "local_event_log": true,
+    "demo_mode": true,
+    "career_insights": true
+  },
+  "card_highlights": [
+    {"icon": "📊", "title": "Attention Profile", "body": "Session summary shows % time in each MFA state — a cognitive fingerprint per subject."},
+    {"icon": "🛤️", "title": "Career Hooks", "body": "AI links topics you hyperfocus on to real STEM roles (research, clinical, engineering, ML)."},
+    {"icon": "🎓", "title": "Student-First", "body": "Built by a 15-year-old published researcher — honest about limits, strong on science."}
+  ]
+}

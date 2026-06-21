@@ -6,8 +6,8 @@ Author: Cora Zeng
 Theoretical foundation: Magnetic Field Model of Attention (MFA)
   — published as preprint, Frontiers in Psychology 2026
 
-v2.0 — Session summary, question deduplication, achievement system,
-        tutor persona, progress tracking, richer analytics.
+v3.0 — Competition profiles, Aura Cerome-lite, live AI chat follow-ups,
+        per-hackathon narratives (see competition_profiles/ + narratives/).
 """
 
 import json
@@ -17,9 +17,18 @@ import time
 from typing import Any, Optional
 
 import streamlit as st
+from dotenv import load_dotenv
 
+load_dotenv()
+
+from ai_tutor import chat_followup, get_explanation, resolve_api_key
+from aura_cerome_lite import (
+    adjust_difficulty_delta,
+    cerome_career_hint,
+    infer_learner_cerome,
+)
+from competition_profiles import list_profile_ids, load_profile, resolve_profile_from_query
 from mfa_attention import compute_attention, state_to_color, state_to_difficulty_delta
-from gemini_adapter import get_explanation
 
 try:
     from integrations.splunk_hec import send_attention_event
@@ -30,6 +39,13 @@ try:
     from integrations.pendo_track import send_track_event
 except ImportError:
     send_track_event = None  # type: ignore[misc, assignment]
+
+try:
+    from integrations.event_log import append_event, export_session_summary
+except ImportError:
+    append_event = None  # type: ignore[misc, assignment]
+    export_session_summary = None  # type: ignore[misc, assignment]
+
 from integrations.pendo import inject_pendo
 
 # ──────────────────────────── CONFIG ────────────────────────────
@@ -197,10 +213,29 @@ def init_state():
         "attention_history": [],     # list of states for mini-chart
         "f_att_history": [],         # list of (question_num, f_att) tuples for line chart
         "splunk_session_id": None,  # stable id for HEC events
+        "chat_messages": [],
+        "ai_source": "demo",
+        "profile_id": None,
     }
     for k, v in defaults.items():
         if k not in st.session_state:
             st.session_state[k] = v
+
+
+def get_active_profile() -> dict[str, Any]:
+    if st.session_state.get("_profile_cache"):
+        return st.session_state["_profile_cache"]
+    qp = st.query_params.get("profile")
+    if qp:
+        prof = resolve_profile_from_query(qp)
+    else:
+        prof = load_profile(st.session_state.get("profile_id"))
+    st.session_state["_profile_cache"] = prof
+    return prof
+
+
+def profile_feature(name: str) -> bool:
+    return bool(get_active_profile().get("features", {}).get(name, False))
 
 
 def get_avg_response_time() -> float:
@@ -253,6 +288,8 @@ def start_session(subject: str):
     st.session_state.attention_history = []
     st.session_state.f_att_history = []
     st.session_state.splunk_session_id = f"cogpace-{int(time.time())}-{random.randint(1000, 9999)}"
+    st.session_state.chat_messages = []
+    st.session_state.ai_source = "demo"
 
     q = select_question(st.session_state.level_map, 2)
     st.session_state.current_question = q
@@ -282,7 +319,12 @@ def next_question():
 
     prev_level = st.session_state.current_level
     att_state = st.session_state.attention_state or "OPTIMAL"
-    delta = state_to_difficulty_delta(att_state)
+    raw_delta = state_to_difficulty_delta(att_state)
+    if profile_feature("cerome_panel"):
+        cerome = infer_learner_cerome(st.session_state.session_history)
+        delta = adjust_difficulty_delta(raw_delta, cerome)
+    else:
+        delta = raw_delta
     new_level = max(1, min(5, prev_level + delta))
     st.session_state.current_level = new_level
 
@@ -364,6 +406,8 @@ def render_mfa_info_box():
 
 def render_persona_header(state: Optional[str] = None):
     """Render the CogPace AI tutor persona header."""
+    prof = get_active_profile()
+    persona = prof.get("persona_name", "CogPace AI")
     persona_msg = {
         "OPTIMAL": "You're in the zone — let's push further. 🚀",
         "UNDERLOADED": "Looks easy for you — I'm raising the challenge. ⚡",
@@ -373,11 +417,12 @@ def render_persona_header(state: Optional[str] = None):
     }
     msg = persona_msg.get(state)
     subj_color = SUBJECT_COLORS.get(st.session_state.subject or "physics", "#7c3aed")
+    accent = prof.get("accent_color", "#4338ca")
     st.markdown(f"""
-    <div class="persona-header">
+    <div class="persona-header" style="border-color:{accent}">
         <div style="font-size:2rem">🤖</div>
         <div>
-            <div style="font-weight:700; color:#c4b5fd; font-size:0.9rem">CogPace AI</div>
+            <div style="font-weight:700; color:#c4b5fd; font-size:0.9rem">{persona}</div>
             <div style="font-size:0.82rem; color:#94a3b8">{msg}</div>
         </div>
     </div>
@@ -431,9 +476,30 @@ def render_attention_history():
 
 # ──────────────────────────── SIDEBAR ────────────────────────────
 def render_sidebar():
+    prof = get_active_profile()
     with st.sidebar:
-        st.markdown("## 🧠 CogPace")
-        st.markdown("*Attention-aware STEM tutor*")
+        display = prof.get("display_name", "CogPace")
+        st.markdown(f"## 🧠 {display}")
+        st.caption(prof.get("tagline", "Attention-aware STEM tutor"))
+        st.caption(f"📋 {prof.get('competition', '')}")
+        if prof.get("track"):
+            st.caption(f"🏷 {prof['track']}")
+
+        with st.expander("Switch competition profile", expanded=False):
+            ids = list_profile_ids()
+            labels = {load_profile(i).get("display_name", i): i for i in ids}
+            choice = st.selectbox(
+                "Profile",
+                options=list(labels.keys()),
+                index=ids.index(prof["id"]) if prof.get("id") in ids else 0,
+                label_visibility="collapsed",
+            )
+            if st.button("Apply profile", use_container_width=True):
+                st.session_state.profile_id = labels[choice]
+                st.session_state.pop("_profile_cache", None)
+                st.query_params["profile"] = labels[choice].replace("_", "-")
+                st.rerun()
+
         st.divider()
 
         if not st.session_state.game_started or st.session_state.session_complete:
@@ -470,6 +536,14 @@ def render_sidebar():
                 st.caption(snap.message)
                 render_attention_history()
 
+            if profile_feature("cerome_panel") and st.session_state.session_history:
+                cerome = infer_learner_cerome(st.session_state.session_history)
+                st.divider()
+                st.markdown("**🧬 Cerome-lite** *(Aura-inspired)*")
+                st.caption(f"σ stability: **{cerome.sigma}** · {cerome.stability_label}")
+                st.caption(f"Engagement: **{cerome.engagement_label}**")
+                st.caption(f"Baseline S: {cerome.baseline_s}")
+
             st.divider()
             if st.button("🔄 Change Subject", use_container_width=True):
                 st.session_state.game_started = False
@@ -479,7 +553,10 @@ def render_sidebar():
 
         st.divider()
         st.markdown("### 🔑 Gemini API Key")
-        st.caption("Optional — enhances explanations with live AI.")
+        st.caption("Optional — live AI tutor. Also reads `.env` GEMINI_API_KEY.")
+        env_key = resolve_api_key()
+        if env_key and not st.session_state.gemini_api_key:
+            st.caption("✅ Loaded from environment")
         key_input = st.text_input(
             "API Key",
             value=st.session_state.gemini_api_key,
@@ -505,52 +582,37 @@ def render_sidebar():
 
 # ──────────────────────────── WELCOME SCREEN ────────────────────────────
 def render_welcome():
-    st.markdown("""
+    prof = get_active_profile()
+    display = prof.get("display_name", "CogPace")
+    accent = prof.get("accent_color", "#7c3aed")
+    subtitle = prof.get("welcome_subtitle", prof.get("tagline", ""))
+    cards = prof.get("card_highlights") or [
+        {"icon": "🧲", "title": "Attention-Aware", "body": "MFA engagement scoring."},
+        {"icon": "🎯", "title": "Adaptive", "body": "Difficulty follows attention state."},
+        {"icon": "🤖", "title": "AI Tutor", "body": "Gemini + offline fallback + chat."},
+    ]
+
+    st.markdown(f"""
     <div style="text-align:center; padding: 50px 20px 30px;">
         <div style="font-size: 64px; margin-bottom: 8px;">🧠</div>
-        <h1 style="font-size: 2.8rem; margin-bottom: 6px; background: linear-gradient(90deg, #7c3aed, #06b6d4);
-                   -webkit-background-clip: text; -webkit-text-fill-color: transparent;">CogPace</h1>
-        <p style="font-size: 1.15rem; color: #94a3b8; max-width: 520px; margin: 0 auto 32px;">
-            The first STEM tutor that reads your <em>attention field</em> — 
-            adapting to how you think, not just what you answer.
+        <h1 style="font-size: 2.8rem; margin-bottom: 6px; background: linear-gradient(90deg, {accent}, #06b6d4);
+                   -webkit-background-clip: text; -webkit-text-fill-color: transparent;">{display}</h1>
+        <p style="font-size: 1.05rem; color: #94a3b8; max-width: 560px; margin: 0 auto 32px;">
+            {subtitle}
         </p>
     </div>
     """, unsafe_allow_html=True)
 
     col1, col2, col3 = st.columns(3)
-    with col1:
-        st.markdown("""
-        <div class="summary-card">
-            <div style="font-size:1.8rem">🧲</div>
-            <div style="font-weight:700; margin:6px 0; color:#c4b5fd">Attention-Aware</div>
-            <div style="font-size:0.88rem; color:#94a3b8">
-                Magnetic Field Attention (MFA) computes your cognitive engagement in real-time 
-                from response speed and accuracy — not just right/wrong.
+    for col, card in zip([col1, col2, col3], cards[:3]):
+        with col:
+            st.markdown(f"""
+            <div class="summary-card">
+                <div style="font-size:1.8rem">{card.get('icon', '✨')}</div>
+                <div style="font-weight:700; margin:6px 0; color:#c4b5fd">{card.get('title', '')}</div>
+                <div style="font-size:0.88rem; color:#94a3b8">{card.get('body', '')}</div>
             </div>
-        </div>
-        """, unsafe_allow_html=True)
-    with col2:
-        st.markdown("""
-        <div class="summary-card">
-            <div style="font-size:1.8rem">🎯</div>
-            <div style="font-weight:700; margin:6px 0; color:#c4b5fd">Adaptive Difficulty</div>
-            <div style="font-size:0.88rem; color:#94a3b8">
-                Bored? We push harder. Overloaded? We simplify and anchor. 
-                Every question adapts to keep you at your optimal learning edge.
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-    with col3:
-        st.markdown("""
-        <div class="summary-card">
-            <div style="font-size:1.8rem">🤖</div>
-            <div style="font-weight:700; margin:6px 0; color:#c4b5fd">AI Explanations</div>
-            <div style="font-size:0.88rem; color:#94a3b8">
-                Powered by Google Gemini, CogPace generates explanations 
-                matched to your <em>exact</em> cognitive state — not a one-size-fits-all answer.
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+            """, unsafe_allow_html=True)
 
     st.divider()
     st.markdown("""
@@ -794,10 +856,23 @@ def render_session_summary():
             border-radius:10px; padding:14px; margin-top:8px;
             font-size:0.88rem; color:#94a3b8; line-height:1.6;
         ">
-        <strong style="color:#c4b5fd">CogPace says:</strong><br>
+        <strong style="color:#c4b5fd">{get_active_profile().get('persona_name', 'CogPace')} says:</strong><br>
         {feedback}
         </div>
         """, unsafe_allow_html=True)
+
+        if profile_feature("career_insights") and st.session_state.session_history:
+            cerome = infer_learner_cerome(st.session_state.session_history)
+            hint = cerome_career_hint(cerome, st.session_state.subject)
+            st.markdown(f"""
+            <div style="
+                background:#0c1929; border:1px solid #0891b2;
+                border-radius:10px; padding:14px; margin-top:10px;
+                font-size:0.88rem; color:#94a3b8;
+            ">
+            <strong style="color:#06b6d4">🛤 Career insight (Cerome-lite):</strong><br>{hint}
+            </div>
+            """, unsafe_allow_html=True)
 
     # Attention Field Trajectory Chart
     f_att_data = st.session_state.f_att_history
@@ -861,6 +936,23 @@ def render_session_summary():
         except Exception:
             # Fallback: simple metric display
             st.line_chart({r["Q"]: r["F_att"] for r in f_att_data})
+
+    if profile_feature("export_json") and export_session_summary and st.session_state.splunk_session_id:
+        cerome = infer_learner_cerome(hist) if hist else None
+        summary_payload = {
+            "session_id": st.session_state.splunk_session_id,
+            "profile": get_active_profile().get("id"),
+            "subject": st.session_state.subject,
+            "score": score,
+            "total": total,
+            "accuracy_pct": accuracy,
+            "dominant_state": dominant_state,
+            "state_counts": state_counts,
+            "cerome": cerome.to_dict() if cerome else None,
+        }
+        out_path = export_session_summary(st.session_state.splunk_session_id, summary_payload)
+        if out_path:
+            st.caption(f"📁 DevOps export: `{out_path.name}` in session_logs/")
 
     st.divider()
     col_btn1, col_btn2 = st.columns(2)
@@ -1013,8 +1105,38 @@ def render_question():
                 )
 
         if st.session_state.explanation:
-            with st.expander("🤖 CogPace AI Explanation (adapted to your attention state)", expanded=True):
+            src = st.session_state.get("ai_source", "demo")
+            src_badge = "🟢 Gemini live" if src == "gemini" else "📦 Offline tutor"
+            with st.expander(f"🤖 AI Explanation ({src_badge})", expanded=True):
                 st.markdown(st.session_state.explanation)
+
+            if profile_feature("chat_followup"):
+                st.markdown("**💬 Ask a follow-up**")
+                for msg in st.session_state.get("chat_messages", []):
+                    with st.chat_message(msg["role"]):
+                        st.markdown(msg["content"])
+                if prompt := st.chat_input("Ask CogPace about this topic…"):
+                    st.session_state.chat_messages.append({"role": "user", "content": prompt})
+                    reply, rsrc = chat_followup(
+                        user_message=prompt,
+                        topic=q.get("topic", "this topic"),
+                        subject=st.session_state.subject or "physics",
+                        state=st.session_state.attention_state or "OPTIMAL",
+                        last_explanation=st.session_state.explanation or "",
+                        api_key=st.session_state.gemini_api_key or None,
+                        profile=get_active_profile(),
+                        session_stats={
+                            "score": st.session_state.score,
+                            "total": st.session_state.total,
+                            "streak": st.session_state.streak,
+                            "accuracy_pct": (
+                                st.session_state.score / st.session_state.total * 100
+                            ) if st.session_state.total else 0,
+                            "trend": "stable",
+                        },
+                    )
+                    st.session_state.chat_messages.append({"role": "assistant", "content": reply})
+                    st.rerun()
 
         with st.expander("📖 Answer Explanation"):
             st.info(q.get("explanation", "No explanation available."))
@@ -1089,6 +1211,7 @@ def handle_answer(selected_idx: int, q: dict):
     st.session_state.attention_state = snap.state
     st.session_state.answered = True
     st.session_state.selected_option = selected_idx
+    st.session_state.chat_messages = []
 
     # Pendo: question_answered
     if send_track_event:
@@ -1148,17 +1271,37 @@ def handle_answer(selected_idx: int, q: dict):
         "trend": trend,
     }
 
-    explanation = get_explanation(
+    explanation, ai_src = get_explanation(
         state=snap.state,
         topic=q.get("topic", "this topic"),
         subject=st.session_state.subject,
         wrong_answer_text=wrong_context,
         api_key=st.session_state.gemini_api_key or None,
         session_stats=session_stats,
+        profile=get_active_profile(),
     )
     st.session_state.explanation = explanation
+    st.session_state.ai_source = ai_src
 
-    if send_attention_event and st.session_state.splunk_session_id:
+    if profile_feature("local_event_log") and append_event and st.session_state.splunk_session_id:
+        append_event(
+            st.session_state.splunk_session_id,
+            "attention_answer",
+            {
+                "question_id": str(q.get("id", "")),
+                "subject": st.session_state.subject,
+                "state": snap.state,
+                "f_att": snap.f_att,
+                "r": snap.r,
+                "S": snap.S,
+                "correct": is_correct,
+                "response_ms": int(response_time_ms),
+                "ai_source": ai_src,
+                "profile": get_active_profile().get("id"),
+            },
+        )
+
+    if send_attention_event and st.session_state.splunk_session_id and profile_feature("splunk_hec"):
         send_attention_event(
             session_id=st.session_state.splunk_session_id,
             question_id=str(q.get("id", "")),
@@ -1175,8 +1318,11 @@ def handle_answer(selected_idx: int, q: dict):
 
 # ──────────────────────────── MAIN ────────────────────────────
 def main():
-    inject_pendo()
     init_state()
+    # Resolve profile early (query param > env > sidebar selection)
+    get_active_profile()
+    if profile_feature("pendo"):
+        inject_pendo()
     render_sidebar()
 
     if not st.session_state.game_started:

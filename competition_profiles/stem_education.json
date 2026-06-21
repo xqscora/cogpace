@@ -1,0 +1,24 @@
+{
+  "id": "stem_education",
+  "display_name": "CogPace",
+  "competition": "DSH Hacks V1 · AI × STEM Education",
+  "track": "Adaptive STEM tutoring",
+  "tagline": "The first STEM tutor that reads your attention field — not just your answers.",
+  "welcome_subtitle": "Built on the Magnetic Field Model of Attention (MFA). Adapts difficulty and AI explanations to how you think, not only what you score.",
+  "persona_name": "CogPace AI",
+  "ai_system_prefix": "You are CogPace AI, a STEM mentor grounded in the Magnetic Field Model of Attention (MFA). F_att(r)=S/r² maps response patterns to cognitive engagement.",
+  "accent_color": "#7c3aed",
+  "features": {
+    "cerome_panel": true,
+    "chat_followup": true,
+    "splunk_hec": false,
+    "pendo": false,
+    "local_event_log": true,
+    "demo_mode": true
+  },
+  "card_highlights": [
+    {"icon": "🧲", "title": "Attention-Aware", "body": "MFA computes engagement from response speed and accuracy — not just right/wrong."},
+    {"icon": "🎯", "title": "Adaptive Difficulty", "body": "Bored? Harder. Overloaded? Simpler. Stay at your learning edge."},
+    {"icon": "🤖", "title": "Live AI Tutor", "body": "Gemini explanations matched to OPTIMAL / UNDERLOADED / APPROACHING / OVERLOADED."}
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "id": "gitlab_devops",
+  "display_name": "CogPace · Attention Telemetry",
+  "competition": "GitLab Transcend Hackathon",
+  "track": "DevOps / Duo — attention as first-class observability",
+  "tagline": "Export MFA attention states as JSON events for CI, MR review, and GitLab Duo — SRE for cognitive sessions, not just servers.",
+  "welcome_subtitle": "STEM tools measure outcomes, not the attention collapse before failure. CogPace emits structured attention events (OPTIMAL → OVERLOADED) suitable for pipelines, dashboards, and Duo-assisted incident review.",
+  "persona_name": "CogPace Ops Agent",
+  "ai_system_prefix": "You are CogPace Ops Agent. Explain attention state transitions for engineers: map F_att, r, S to operational language (healthy, degraded, incident). Be factual — MFA drives adaptation, no preset if-then rules in Python.",
+  "accent_color": "#fc6d26",
+  "features": {
+    "cerome_panel": true,
+    "chat_followup": true,
+    "splunk_hec": false,
+    "pendo": false,
+    "local_event_log": true,
+    "demo_mode": true,
+    "export_json": true
+  },
+  "card_highlights": [
+    {"icon": "📡", "title": "JSON Event Stream", "body": "Every answer emits session_id, state, f_att, r, S — DevOps-ready schema."},
+    {"icon": "🔧", "title": "GitLab CI Ready", "body": "Smoke-test mfa_attention.py in CI; attention thresholds belong in MR descriptions."},
+    {"icon": "🤖", "title": "Duo-Friendly", "body": "Duo Chat can explain why F_thresh was crossed using Lavie load / MFA σ parameters."}
+  ]
+}

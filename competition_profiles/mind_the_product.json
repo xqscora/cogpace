@@ -1,0 +1,24 @@
+{
+  "id": "mind_the_product",
+  "display_name": "CogPace · Product Analytics",
+  "competition": "Mind the Product · World Product Day",
+  "track": "Novus AI + Pendo — product analytics for adaptive learning",
+  "tagline": "Attention telemetry as product analytics: see where learners drop from OPTIMAL to OVERLOADED before they churn.",
+  "welcome_subtitle": "PMs track clicks; CogPace tracks cognitive state. Pendo-style events (session_started, attention_state_changed, achievement_unlocked) reveal the funnel inside learning — not just completion rates.",
+  "persona_name": "CogPace PM Copilot",
+  "ai_system_prefix": "You are CogPace PM Copilot. Translate MFA attention metrics into product insights: activation, engagement depth, overload friction, and feature opportunities for adaptive ed-tech.",
+  "accent_color": "#6366f1",
+  "features": {
+    "cerome_panel": true,
+    "chat_followup": true,
+    "splunk_hec": false,
+    "pendo": true,
+    "local_event_log": true,
+    "demo_mode": true
+  },
+  "card_highlights": [
+    {"icon": "📊", "title": "Pendo Events", "body": "Track session funnel, streak milestones, and state transitions."},
+    {"icon": "🎯", "title": "Novus-Ready", "body": "Attention collapse rate = leading indicator for product intervention."},
+    {"icon": "🧠", "title": "Scientific Moat", "body": "MFA theory (Zeng 2026) — not generic engagement scoring."}
+  ]
+}

@@ -6,7 +6,27 @@ CogPace is the first adaptive STEM tutor built on a **peer-reviewed attention sc
 
 ---
 
-## The Science Behind It
+## v3.0 — Multi-hackathon profiles (2026-06-21)
+
+One runnable app, **per-competition narrative**. See [`RUN_PROFILES.md`](RUN_PROFILES.md).
+
+```powershell
+pip install -r requirements.txt
+.\run_cogpace.ps1 -Profile youth_code_social
+# or: streamlit run app.py  with  ?profile=youth_social
+```
+
+| Profile | Angle |
+|---------|--------|
+| `youth_code_social` | Track 03 social impact + overload detection |
+| `youth_code_education` | Track 04 career coach + Cerome hints |
+| `gitlab_devops` | JSON telemetry export |
+| `splunk_observability` | HEC streaming |
+| `mind_the_product` | Pendo analytics |
+
+**New:** Aura **Cerome-lite** (σ from RT variance), **Gemini follow-up chat**, `.env` API key, `test_smoke.py`.
+
+---
 
 CogPace is grounded in an original mathematical model: **F_att(r) = S / r虏**
 
